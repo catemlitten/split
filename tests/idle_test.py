@@ -16,9 +16,7 @@ screen = pygame.display.set_mode((275, 275))
 done = False
 clock = pygame.time.Clock()
 
-path = os.path.dirname(os.path.realpath(__file__))
-x = 100
-y = 100
+path = os.path.dirname(os.path.realpath(__file__))[:-6]
 frame = 1
 
 while not done:
@@ -27,11 +25,12 @@ while not done:
             done = True
     
     frame += 1
-    frame = (frame - 1) % 27 + 1
+    frame = (frame - 1) % 30 + 1
 
     screen.fill((255, 255, 255))
     
-    screen.blit(get_image(path + '\\animation\\character1\\' + (4-len(str(frame)))*'0' + str(frame) + '.png'), (x, y))
+    screen.blit(get_image(path + '\\animation\\character1\\idle\\' + (4-len(str(frame)))*'0' + str(frame) + '.png'), (50, 100))
+    screen.blit(get_image(path + '\\animation\\character2\\idle\\' + (4-len(str(frame)))*'0' + str(frame) + '.png'), (150, 100))
     
     pygame.display.flip()
     clock.tick(60)
