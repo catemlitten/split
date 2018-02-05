@@ -34,12 +34,12 @@ def main():
     clock = pygame.time.Clock()
 
     path = os.path.dirname(os.path.realpath(__file__)) + '\\..'
-    frames = [[0,27],[0,27],[0,60],[0,30],[0,30]]
+    frames = [[0,27],[0,27],[0,60],[0,30],[0,30],[0,60],[0,60],[0,60]]
 
-    x1 = 200
-    y1 = 300
-    x2 = 525
-    y2 = 300
+    x1 = 187.5
+    y1 = 150
+    x2 = 337.5
+    y2 = 150
     direction = '-'
     moving = False
 
@@ -71,38 +71,52 @@ def main():
                         moving  = False
         if frames[2][0] == 0:
             frames[2][0] = 1
+        if frames[5][0] == 0:
+            frames[5][0] = 1
+        if frames[6][0] == 0:
+            frames[6][0] = 1
+        if frames[7][0] == 0:
+            frames[7][0] = 1
         if frames[3][0] == 0 and frames[0][0] == 0:
             frames[3][0] = 1
         if frames[4][0] == 0 and frames[1][0] == 0:
             frames[4][0] = 1
 
+        tiles = [[2,5],[2,6],[3,6],[4,6],[5,6],[5,5],[6,6],[7,6]]
         screen.fill((255, 255, 255))
-        #screen.blit(get_image(path + '\\animation\\bg.png'), (0, 0))
-
+        screen.blit(get_image(path + '\\animation\\bg.png'), (0, 0))
+        for i in range(len(tiles)):
+            screen.blit(get_image(path + '\\animation\\tile.png'), (tiles[i][0]*50+100, tiles[i][1]*35+20))
         
         if direction == 'w':
-            y1 -= (35/27)
-            y2 -= (35/27)
+            y1 -= (35/26)
+            y2 -= (35/26)
         elif direction == 'a':
-            x1 -= (50/27)
-            x2 -= (50/27)
+            x1 -= (50/26)
+            x2 -= (50/26)
         elif direction == 's':
-            y1 += (35/27)
-            y2 += (35/27)
+            y1 += (35/26)
+            y2 += (35/26)
         elif direction == 'd':
-            x1 += (50/27)
-            x2 += (50 /27)
+            x1 += (50/26)
+            x2 += (50/26)
 
         if frames[0][0] > 0:
             drawFrame(screen, path + '\\animation\\character1\\jump\\', frames[0][0], x1, y1)
         if frames[1][0] > 0:
             drawFrame(screen, path + '\\animation\\character2\\jump\\', frames[1][0], x2, y2)
         if frames[2][0] > 0:
-            drawFrame(screen, path + '\\animation\\dice\\', frames[2][0], 25, 500)
+            drawFrame(screen, path + '\\animation\\dice1\\', frames[2][0], 150, 400)
         if frames[3][0] > 0:
             drawFrame(screen, path + '\\animation\\character1\\idle\\', frames[3][0], x1, y1)
         if frames[4][0] > 0:
             drawFrame(screen, path + '\\animation\\character2\\idle\\', frames[4][0], x2, y2)
+        if frames[5][0] > 0:
+            drawFrame(screen, path + '\\animation\\dice2\\', frames[5][0], 600, 200)
+        if frames[6][0] > 0:
+            drawFrame(screen, path + '\\animation\\pin1\\', frames[6][0], 100, 100)
+        if frames[7][0] > 0:
+            drawFrame(screen, path + '\\animation\\pin2\\', frames[7][0], 550, 450)
 
         
         pygame.display.flip()
