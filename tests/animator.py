@@ -17,7 +17,7 @@ class Animator:
     def get_image(self, path):
         image = self._image_library.get(path)
         if image == None:
-            canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
+            canonicalized_path = path.replace('/', os.sep).replace('/', os.sep)
             image = pygame.image.load(canonicalized_path)
             self._image_library[path] = image
         return image
