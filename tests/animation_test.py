@@ -26,9 +26,9 @@ def main():
     p1 = Player(path + '\\animation\\character1\\', 9, 6)
     p2 = Player(path + '\\animation\\character2\\', 12, 11)
     anims = [	
-    	Animator(path + '\\animation\\dice1\\', 9, 3),
+    	Animator(path + '\\animation\\coin\\', 9, 3),
     	Animator(path + '\\animation\\dice2\\', 3, 12),
-    	Animator(path + '\\animation\\pin1\\', 14, 4),
+    	Animator(path + '\\animation\\dice1\\', 14, 4),
     	Animator(path + '\\animation\\pin2\\', 12, 9)
     ]
     tiles = [
@@ -71,10 +71,10 @@ def main():
         screen.fill((255, 255, 255))
         screen.blit(get_image(path + '\\animation\\bg_2.png'), (0, 0))
         screen.blit(get_image(path + '\\animation\\label.png'), (0, 560))
-        screen.blit(get_image(path + '\\animation\\tile_red.png'), ((tileRed[0] - 1)*50, (tileRed[1] - 1)*35+40))
-        screen.blit(get_image(path + '\\animation\\tile_blue.png'), ((tileBlue[0] - 1)*50, (tileBlue[1] - 1)*35+40))
+        screen.blit(get_image(path + '\\animation\\coin_red.png'), ((tileRed[0] - 1)*50, (tileRed[1] - 1)*35+40))
+        screen.blit(get_image(path + '\\animation\\coin_blue.png'), ((tileBlue[0] - 1)*50, (tileBlue[1] - 1)*35+40))
         for i in range(len(tiles)):
-            screen.blit(get_image(path + '\\animation\\tile.png'), ((tiles[i][0] - 1)*50, (tiles[i][1] - 1)*35+40))
+            screen.blit(get_image(path + '\\animation\\coin.png'), ((tiles[i][0] - 1)*50, (tiles[i][1] - 1)*35+40))
 
         p1.update(direction, screen)
         p2.update(direction, screen)
@@ -82,7 +82,7 @@ def main():
         	anims[i].update(screen)
 
         for i in range(len(walls)):
-            screen.blit(get_image(path + '\\animation\\wall.png'), ((walls[i][0] - 1)*50, (walls[i][1] - 1)*35+40))
+            screen.blit(get_image(path + '\\animation\\thymbal.png'), ((walls[i][0] - 1)*50, (walls[i][1] - 1)*35+40))
         
         pygame.display.flip()
         clock.tick(60)

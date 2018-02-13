@@ -14,8 +14,8 @@ class Player:
         self.realX = (self.x - 1) * 50 - 12.5
         self.realY = (self.y - 1) * 35 + 8
         self.state = "idle"
-        self.idleFrames = 30
-        self.jumpFrames = 27
+        self.idleFrames = len(os.listdir(self.path + 'idle\\'))
+        self.jumpFrames = len(os.listdir(self.path + 'jump\\'))
 
     def get_image(self, path):
         image = self._image_library.get(path)
@@ -31,13 +31,13 @@ class Player:
     def location(self, isReal):
         if isReal:
             if self.d == 'up':
-                self.realY -= 35/27
+                self.realY -= 35/self.jumpFrames
             elif self.d == 'down':
-                self.realY += 35/27
+                self.realY += 35/self.jumpFrames
             elif self.d == 'left':
-                self.realX -= 50/27
+                self.realX -= 50/self.jumpFrames
             elif self.d == 'right':
-                self.realX += 50/27
+                self.realX += 50/self.jumpFrames
         else:
             if self.d == 'up':
                 self.y -= 1

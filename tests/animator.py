@@ -12,7 +12,7 @@ class Animator:
         self.y = y
         self.realX = (self.x - 1) * 50 - 12.5
         self.realY = (self.y - 1) * 35 + 20
-        self.nFrames = 60
+        self.nFrames = len(os.listdir(self.path))
 
     def get_image(self, path):
         image = self._image_library.get(path)
