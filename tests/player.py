@@ -14,19 +14,19 @@ class Player:
         self.realX = (self.x - 1) * 50 - 12.5
         self.realY = (self.y - 1) * 35 + 8
         self.state = "idle"
-        self.idleFrames = len(os.listdir(self.path + 'idle\\'))
-        self.jumpFrames = len(os.listdir(self.path + 'jump\\'))
+        self.idleFrames = len(os.listdir(self.path + 'idle/'))
+        self.jumpFrames = len(os.listdir(self.path + 'jump/'))
 
     def get_image(self, path):
         image = self._image_library.get(path)
         if image == None:
-            canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
+            canonicalized_path = path.replace('/', os.sep).replace('/', os.sep)
             image = pygame.image.load(canonicalized_path)
             self._image_library[path] = image
         return image
 
     def drawFrame(self, sc):
-        sc.blit(self.get_image(self.path + self.state + "\\" + (4-len(str(self.frame)))*'0' + str(self.frame) + '.png'), (self.realX,self.realY))
+        sc.blit(self.get_image(self.path + self.state + "/" + (4-len(str(self.frame)))*'0' + str(self.frame) + '.png'), (self.realX,self.realY))
 
     def location(self, isReal):
         if isReal:
