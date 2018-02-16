@@ -3,8 +3,10 @@ from animator import *
 from tile import *
 import pygame
 import os
+import random
 
 _image_library = {}
+_sound_library = {}
 
 def get_image(path):
     global _image_library
@@ -14,6 +16,15 @@ def get_image(path):
         image = pygame.image.load(canonicalized_path)
         _image_library[path] = image
     return image
+
+def play_sound(path):
+  global _sound_library
+  sound = _sound_library.get(path)
+  if sound == None:
+    canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
+    sound = pygame.mixer.Sound(canonicalized_path)
+    _sound_library[path] = sound
+  sound.play()
 
 def main():
     pygame.init()
@@ -26,7 +37,7 @@ def main():
 
     #board object can be created here, and the parameter for the __init__ can be the level file at [path + '/levels/level1.txt']
     #it can have check() to check if jumps are possible
-    #update() to edit tiles after a jump
+    #update() to edit tiles after a jump. Should return the index of the tile to be removed.
     #and getPlayerInitPos() so we can put the players in the right position initially. 
         #Maybe this can be an array like this [[9,6],[12,11]]
 
@@ -35,7 +46,7 @@ def main():
 
     #Maybe this animation objects can be somehow part of the board? Think about later
     anims = [	
-    	Animator(path + '/animation/coin/', 9, 3),
+    	Animator(path + '/animation/pin1/', 9, 3),
     	Animator(path + '/animation/dice2/', 3, 12),
     	Animator(path + '/animation/dice1/', 14, 4),
     	Animator(path + '/animation/pin2/', 12, 9)
@@ -94,6 +105,10 @@ def main():
         Tile('/animation/coin.png', 14, 13)
     ]
 
+    fallingCoins = []
+    
+    frame = 0
+
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -116,6 +131,26 @@ def main():
 
         for i in range(len(tiles)):
             screen.blit(get_image(path + tiles[i].path), tiles[i].getRealXY())
+
+        #TO BE REPLACED: code for a tile getting deleted. Falling coin.
+        if frame % 60 == 0:
+            r = random.randrange(0,len(tiles))
+            if tiles[r].path == '/animation/coin.png':
+                fallingCoin = Animator(path + '/animation/coin/', tiles[r].x, tiles[r].y)
+                fallingCoin.realX += 12.5
+                fallingCoin.realY += 30
+                fallingCoins.append([fallingCoin, 0])
+                del tiles[r]
+                play_sound(path + '/sounds/coinflip.wav')
+                #print(fallingCoins)
+
+        for i in range(len(fallingCoins)-1,-1,-1):
+            fallingCoins[i][1] += 0.3
+            fallingCoins[i][0].realY += fallingCoins[i][1]
+            fallingCoins[i][0].update(screen)
+            if fallingCoins[i][0].realY > 600:
+                del fallingCoins[i]
+                #print(fallingCoins)
        
         p1.update(direction, screen) #add board parameter to check if jump is possible
         p2.update(direction, screen)
@@ -123,7 +158,7 @@ def main():
         for i in range(len(anims)):
         	anims[i].update(screen)
 
-        
+        frame += 1
         pygame.display.flip()
         clock.tick(60)
 
