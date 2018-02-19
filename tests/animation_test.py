@@ -36,6 +36,7 @@ def main():
     p2 = Player(path + '/animation/character2/', board.player2[0], board.player2[1])
 
     #Maybe this animation objects can be somehow part of the board? Think about later
+    # maybe make them randomly chosen from empty spaces
     anims = [	
     	Animator(path + '/animation/coin/', 9, 3),
     	Animator(path + '/animation/dice2/', 3, 12),
@@ -57,7 +58,7 @@ def main():
         elif pygame.key.get_pressed()[pygame.K_d]:
             direction = 'right'
         else:
-        	direction = 'idle'
+            direction = 'idle'
 
         screen.fill((255, 255, 255))
         screen.blit(get_image(path + '/animation/bg_2.png'), (0, 0))
@@ -70,7 +71,7 @@ def main():
         p2.update(direction, screen)
 
         for i in range(len(anims)):
-        	anims[i].update(screen)
+            anims[i].update(screen)
 
         
         pygame.display.flip()

@@ -49,60 +49,6 @@ class Board:
             x = 1 # reset x
                 # print(x,y)
 
-    #Of course, this list won't be hard-coded, and will instead come from board.getTiles()
-    '''
-    tiles = [
-        Tile(coin, 3, 3),
-        Tile(thymbal, 4, 3),
-        Tile(coin, 5, 3),
-        Tile(coin, 6, 3),
-        Tile(thymbal, 3, 4),
-        Tile(coin, 4, 4),
-        Tile(coin, 5, 4),
-        Tile(coin, 6, 4),
-        Tile(coin, 3, 5),
-        Tile(coin, 4, 5),
-        Tile(red_coin, 6, 5),
-        Tile(coin, 3, 6),
-        Tile(coin, 4, 6),
-        Tile(coin, 7, 6),
-        Tile(coin, 8, 6),
-        Tile(coin, 9, 6),
-        Tile(thymbal, 3, 7),
-        Tile(coin, 4, 7),
-        Tile(coin, 7, 7),
-        Tile(coin, 8, 7),
-        Tile(thymbal, 9, 7),
-        Tile(coin, 3, 8),
-        Tile(coin, 4, 8),
-        Tile(coin, 5, 8),
-        Tile(coin, 6, 8),
-        Tile(coin, 7, 8),
-        Tile(coin, 8, 8),
-        Tile(thymbal, 10, 11),
-        Tile(coin, 11, 11),
-        Tile(coin, 12, 11),
-        Tile(coin, 13, 11),
-        Tile(coin, 14, 11),
-        Tile(blue_coin, 5, 12),
-        Tile(coin, 6, 12),
-        Tile(thymbal, 7, 12),
-        Tile(thymbal, 10, 12),
-        Tile(coin, 11, 12),
-        Tile(coin, 12, 12),
-        Tile(coin, 13, 12),
-        Tile(coin, 14, 12),
-        Tile(coin, 6, 13),
-        Tile(coin, 7, 13),
-        Tile(coin, 8, 13),
-        Tile(coin, 9, 13),
-        Tile(coin, 10, 13),
-        Tile(coin, 11, 13),
-        Tile(coin, 12, 13),
-        Tile(coin, 13, 13),
-        Tile(coin, 14, 13)
-        ]
-    '''
     def getTiles(self, level_file):
         self.read_level(level_file)
         return self.tiles;
