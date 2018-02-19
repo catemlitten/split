@@ -10,6 +10,7 @@ class Board:
         self.tiles = []
         self.player1 = [0, 0]
         self.player2 = [0, 0]
+        self.emptySpots = []
 
     def read_level(self, level_file):
         fileHand = open(level_file, 'r')
@@ -19,6 +20,7 @@ class Board:
             for whatGoesThere in line:
                 if(whatGoesThere == 'e'):
                     # nothing to make, but increment x
+                    self.emptySpots.append([x, y])
                     x += 1
                 elif(whatGoesThere == 't'):
                     self.tiles.append(Tile(self.coin, x, y))
@@ -47,13 +49,12 @@ class Board:
                     print("Blank space? Why? strip() does not work")
             y += 1 # increment y access
             x = 1 # reset x
-                # print(x,y)
 
     def getTiles(self, level_file):
         self.read_level(level_file)
         return self.tiles;
 
-    def checkJump(playerOne, playerTwo):
+    def checkJump(self, playerOne, playerTwo):
         # if jump off cliff - die
         # else if jump onto new coin call update()
         # else if wall -- bounce
