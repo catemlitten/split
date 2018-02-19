@@ -39,23 +39,17 @@ def main():
     #Maybe this animation objects can be somehow part of the board? Think about later
     # maybe make them randomly chosen from empty spaces
     emptySpots = board.emptySpots
-    rand1 = random.randint(0, len(emptySpots)-1)
-    emptySpot1 = emptySpots[rand1]
-    del emptySpots[rand1]
-    rand2 = random.randint(0, len(emptySpots) - 1)
-    emptySpot2 = emptySpots[rand2]
-    del emptySpots[rand2]
-    rand3 = random.randint(0, len(emptySpots) - 1)
-    emptySpot3 = emptySpots[rand3]
-    del emptySpots[rand3]
-    rand4 = random.randint(0, len(emptySpots) - 1)
-    emptySpot4 = emptySpots[rand4]
-    del emptySpots[rand4]
+    animationSpots = []
+    for x in range(4):
+        rand1 = random.randint(0, len(emptySpots) - 1)
+        animationSpots.append(emptySpots[rand1])
+        del emptySpots[rand1]
+
     anims = [	
-    	Animator(path + '/animation/coin/', emptySpot1[0], emptySpot1[1]),
-    	Animator(path + '/animation/dice2/', emptySpot2[0], emptySpot2[1]),
-    	Animator(path + '/animation/dice1/', emptySpot3[0], emptySpot3[1]),
-    	Animator(path + '/animation/pin2/', emptySpot4[0], emptySpot4[1])
+    	Animator(path + '/animation/coin/', animationSpots[0][0], animationSpots[0][1]),
+    	Animator(path + '/animation/dice2/', animationSpots[1][0], animationSpots[1][1]),
+    	Animator(path + '/animation/dice1/', animationSpots[2][0], animationSpots[2][1]),
+    	Animator(path + '/animation/pin2/', animationSpots[3][0], animationSpots[3][1])
     ]
 
     while not done:
