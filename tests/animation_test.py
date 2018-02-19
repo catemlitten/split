@@ -1,6 +1,7 @@
 from player import *
 from animator import *
 from tile import *
+from board import *
 import pygame
 import os
 
@@ -23,7 +24,8 @@ def main():
     path = os.path.dirname(os.path.realpath(__file__)) + '/..'
 
     direction = '-'
-
+    board = Board()
+    tiles = board.getTiles("level1.txt");
     #board object can be created here, and the parameter for the __init__ can be the level file at [path + '/levels/level1.txt']
     #it can have check() to check if jumps are possible
     #update() to edit tiles after a jump
@@ -39,59 +41,6 @@ def main():
     	Animator(path + '/animation/dice2/', 3, 12),
     	Animator(path + '/animation/dice1/', 14, 4),
     	Animator(path + '/animation/pin2/', 12, 9)
-    ]
-
-    #Of course, this list won't be hard-coded, and will instead come from board.getTiles()
-    tiles = [
-        Tile('/animation/coin.png', 3, 3),
-        Tile('/animation/thymbal.png', 4, 3),
-        Tile('/animation/coin.png', 5, 3),
-        Tile('/animation/coin.png', 6, 3),
-        Tile('/animation/thymbal.png', 3, 4),
-        Tile('/animation/coin.png', 4, 4),
-        Tile('/animation/coin.png', 5, 4),
-        Tile('/animation/coin.png', 6, 4),
-        Tile('/animation/coin.png', 3, 5),
-        Tile('/animation/coin.png', 4, 5),
-        Tile('/animation/coin_red.png', 6, 5),
-        Tile('/animation/coin.png', 3, 6),
-        Tile('/animation/coin.png', 4, 6),
-        Tile('/animation/coin.png', 7, 6),
-        Tile('/animation/coin.png', 8, 6),
-        Tile('/animation/coin.png', 9, 6),
-        Tile('/animation/thymbal.png', 3, 7),
-        Tile('/animation/coin.png', 4, 7),
-        Tile('/animation/coin.png', 7, 7),
-        Tile('/animation/coin.png', 8, 7),
-        Tile('/animation/thymbal.png', 9, 7),
-        Tile('/animation/coin.png', 3, 8),
-        Tile('/animation/coin.png', 4, 8),
-        Tile('/animation/coin.png', 5, 8),
-        Tile('/animation/coin.png', 6, 8),
-        Tile('/animation/coin.png', 7, 8),
-        Tile('/animation/coin.png', 8, 8),
-        Tile('/animation/thymbal.png', 10, 11),
-        Tile('/animation/coin.png', 11, 11),
-        Tile('/animation/coin.png', 12, 11),
-        Tile('/animation/coin.png', 13, 11),
-        Tile('/animation/coin.png', 14, 11),
-        Tile('/animation/coin_blue.png', 5, 12),
-        Tile('/animation/coin.png', 6, 12),
-        Tile('/animation/thymbal.png', 7, 12),
-        Tile('/animation/thymbal.png', 10, 12),
-        Tile('/animation/coin.png', 11, 12),
-        Tile('/animation/coin.png', 12, 12),
-        Tile('/animation/coin.png', 13, 12),
-        Tile('/animation/coin.png', 14, 12),
-        Tile('/animation/coin.png', 6, 13),
-        Tile('/animation/coin.png', 7, 13),
-        Tile('/animation/coin.png', 8, 13),
-        Tile('/animation/coin.png', 9, 13),
-        Tile('/animation/coin.png', 10, 13),
-        Tile('/animation/coin.png', 11, 13),
-        Tile('/animation/coin.png', 12, 13),
-        Tile('/animation/coin.png', 13, 13),
-        Tile('/animation/coin.png', 14, 13)
     ]
 
     while not done:
