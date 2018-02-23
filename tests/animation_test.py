@@ -1,6 +1,8 @@
 from player import *
 from animator import *
 from tile import *
+from board import *
+import random
 import pygame
 import os
 
@@ -23,75 +25,34 @@ def main():
     path = os.path.dirname(os.path.realpath(__file__)) + '/..'
 
     direction = '-'
-
-    #board object can be created here, and the parameter for the __init__ can be the level file at [path + '/levels/level1.txt']
-    #it can have check() to check if jumps are possible
-    #update() to edit tiles after a jump
-    #and getPlayerInitPos() so we can put the players in the right position initially. 
+    board = Board()
+    tiles = board.get_tiles("level2.txt");
+    '''
+    board object can be created here, and the parameter for the __init__ can be the level file at [path + '/levels/level1.txt']
+    it can have check() to check if jumps are possible
+    update() to edit tiles after a jump
+    and getPlayerInitPos() so we can put the players in the right position initially. 
         #Maybe this can be an array like this [[9,6],[12,11]]
+    '''
 
-    p1 = Player(path + '/animation/character1/', 9, 6)
-    p2 = Player(path + '/animation/character2/', 12, 11)
+    p1 = Player(path + '/animation/character1/', board.player1[0], board.player1[1])
+    p2 = Player(path + '/animation/character2/', board.player2[0], board.player2[1])
+    '''
+    Maybe this animation objects can be somehow part of the board? Think about later
+     maybe make them randomly chosen from empty spaces
+    '''
+    emptySpots = board.emptySpots
+    animationSpots = []
+    for x in range(4):
+        rand1 = random.randint(0, len(emptySpots) - 1)
+        animationSpots.append(emptySpots[rand1])
+        del emptySpots[rand1]
 
-    #Maybe this animation objects can be somehow part of the board? Think about later
     anims = [	
-    	Animator(path + '/animation/coin/', 9, 3),
-    	Animator(path + '/animation/dice2/', 3, 12),
-    	Animator(path + '/animation/dice1/', 14, 4),
-    	Animator(path + '/animation/pin2/', 12, 9)
-    ]
-
-    #Of course, this list won't be hard-coded, and will instead come from board.getTiles()
-    tiles = [
-        Tile('/animation/coin.png', 3, 3),
-        Tile('/animation/thymbal.png', 4, 3),
-        Tile('/animation/coin.png', 5, 3),
-        Tile('/animation/coin.png', 6, 3),
-        Tile('/animation/thymbal.png', 3, 4),
-        Tile('/animation/coin.png', 4, 4),
-        Tile('/animation/coin.png', 5, 4),
-        Tile('/animation/coin.png', 6, 4),
-        Tile('/animation/coin.png', 3, 5),
-        Tile('/animation/coin.png', 4, 5),
-        Tile('/animation/coin_red.png', 6, 5),
-        Tile('/animation/coin.png', 3, 6),
-        Tile('/animation/coin.png', 4, 6),
-        Tile('/animation/coin.png', 7, 6),
-        Tile('/animation/coin.png', 8, 6),
-        Tile('/animation/coin.png', 9, 6),
-        Tile('/animation/thymbal.png', 3, 7),
-        Tile('/animation/coin.png', 4, 7),
-        Tile('/animation/coin.png', 7, 7),
-        Tile('/animation/coin.png', 8, 7),
-        Tile('/animation/thymbal.png', 9, 7),
-        Tile('/animation/coin.png', 3, 8),
-        Tile('/animation/coin.png', 4, 8),
-        Tile('/animation/coin.png', 5, 8),
-        Tile('/animation/coin.png', 6, 8),
-        Tile('/animation/coin.png', 7, 8),
-        Tile('/animation/coin.png', 8, 8),
-        Tile('/animation/thymbal.png', 10, 11),
-        Tile('/animation/coin.png', 11, 11),
-        Tile('/animation/coin.png', 12, 11),
-        Tile('/animation/coin.png', 13, 11),
-        Tile('/animation/coin.png', 14, 11),
-        Tile('/animation/coin_blue.png', 5, 12),
-        Tile('/animation/coin.png', 6, 12),
-        Tile('/animation/thymbal.png', 7, 12),
-        Tile('/animation/thymbal.png', 10, 12),
-        Tile('/animation/coin.png', 11, 12),
-        Tile('/animation/coin.png', 12, 12),
-        Tile('/animation/coin.png', 13, 12),
-        Tile('/animation/coin.png', 14, 12),
-        Tile('/animation/coin.png', 6, 13),
-        Tile('/animation/coin.png', 7, 13),
-        Tile('/animation/coin.png', 8, 13),
-        Tile('/animation/coin.png', 9, 13),
-        Tile('/animation/coin.png', 10, 13),
-        Tile('/animation/coin.png', 11, 13),
-        Tile('/animation/coin.png', 12, 13),
-        Tile('/animation/coin.png', 13, 13),
-        Tile('/animation/coin.png', 14, 13)
+    	Animator(path + '/animation/coin/', animationSpots[0][0], animationSpots[0][1]),
+    	Animator(path + '/animation/dice2/', animationSpots[1][0], animationSpots[1][1]),
+    	Animator(path + '/animation/dice1/', animationSpots[2][0], animationSpots[2][1]),
+    	Animator(path + '/animation/pin2/', animationSpots[3][0], animationSpots[3][1])
     ]
 
     while not done:
@@ -108,7 +69,7 @@ def main():
         elif pygame.key.get_pressed()[pygame.K_d]:
             direction = 'right'
         else:
-        	direction = 'idle'
+            direction = 'idle'
 
         screen.fill((255, 255, 255))
         screen.blit(get_image(path + '/animation/bg_2.png'), (0, 0))
@@ -117,13 +78,12 @@ def main():
         for i in range(len(tiles)):
             screen.blit(get_image(path + tiles[i].path), tiles[i].getRealXY())
        
-        p1.update(direction, screen) #add board parameter to check if jump is possible
-        p2.update(direction, screen)
+        p1.update(direction, screen, board.board)  # add board parameter to check if jump is possible
+        p2.update(direction, screen, board.board)
 
         for i in range(len(anims)):
-        	anims[i].update(screen)
+            anims[i].update(screen)
 
-        
         pygame.display.flip()
         clock.tick(60)
 

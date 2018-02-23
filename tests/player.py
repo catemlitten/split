@@ -48,21 +48,35 @@ class Player:
             elif self.d == 'right':
                 self.x += 1
 
-    def update(self, d, sc): #add board parameter to control jump
+    def update(self, direction, screen, board):  # add board parameter to control jump
         self.frame += 1
         if self.state == "idle" and self.frame > self.idleFrames:
             self.frame = 1
         elif self.state == "jump" and self.frame > self.jumpFrames:
             self.frame = 1
             self.state = "idle"
-            self.location(False) #this is where the jump animation ends and the player position is updated.
-            #we should have the board object update here (board.update(x, y, direction [d])), and check if the player just jumped off (died)
+            self.location(False)  # this is where the jump animation ends and the player position is updated.
+            # we should have the board object update here (board.update(x, y, direction [d])), and check if the player just jumped off (died)
             self.d = "idle"
             self.frame = 1
-        if self.state == "idle" and d != "idle": # and board.check(x, y, direction [d]):
-            self.d = d
+        if self.state == "idle" and direction != "idle": # and board.check(x, y, direction [d]):
+            self.d = direction
+            if direction == 'up':
+                spot = board[self.y - 2][self.x - 1]
+                print(self.x, self.y)
+                print(spot)
+                if spot == 'e':
+                    print("Oh no, I've died.")
+                elif spot == 'w':
+                    print("Ouch!")
+            if direction == 'down':
+                spot = board[self.y][self.x - 1]
+            if direction == 'left':
+                spot = board[self.y - 1][self.x - 2]
+            if direction == 'right':
+                spot = board[self.y - 1][self.x]
             self.state = "jump"
             self.frame = 1
         if self.state == "jump":
             self.location(True)
-        self.drawFrame(sc)
+        self.drawFrame(screen)
