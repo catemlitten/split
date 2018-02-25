@@ -21,14 +21,14 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((800, 600))
     done = False
+    player_dead = False
+    background = '/animation/bg_2.png'
     clock = pygame.time.Clock()
     path = os.path.dirname(os.path.realpath(__file__)) + '/..'
 
     direction = '-'
     board = Board()
     tiles = board.get_tiles("level2.txt");
-    for tile in tiles:
-        print(tile.x, tile.y)
     '''
     board object can be created here, and the parameter for the __init__ can be the level file at [path + '/levels/level1.txt']
     it can have check() to check if jumps are possible
@@ -62,6 +62,9 @@ def main():
             if event.type == pygame.QUIT:
                 done = True
 
+        if player_dead:
+            background = '/animation/gameover.jpg'
+
         if pygame.key.get_pressed()[pygame.K_w]:
             direction = 'up'
         elif pygame.key.get_pressed()[pygame.K_a]:
@@ -74,14 +77,17 @@ def main():
             direction = 'idle'
 
         screen.fill((255, 255, 255))
-        screen.blit(get_image(path + '/animation/bg_2.png'), (0, 0))
+        screen.blit(get_image(path + background), (0, 0))
         screen.blit(get_image(path + '/animation/label.png'), (0, 560))
 
         for i in range(len(tiles)):
             screen.blit(get_image(path + tiles[i].path), tiles[i].getRealXY())
        
-        p1.update(direction, screen, board)  # add board parameter to check if jump is possible
-        p2.update(direction, screen, board)
+        p1_status = p1.update(direction, screen, board)
+        p2_status = p2.update(direction, screen, board)
+
+        if p1_status == "dead" or p2_status == "dead":
+            player_dead = True
 
         for i in range(len(anims)):
             anims[i].update(screen)

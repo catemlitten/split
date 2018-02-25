@@ -43,7 +43,6 @@ class Board:
                 elif whatGoesThere == '1':
                     self.player1[0] = x
                     self.player1[1] = y
-                    print(self.player1)
                     self.tiles.append(Tile(self.coin, x, y))
                     x += 1
                 elif whatGoesThere == '2':
