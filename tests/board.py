@@ -56,11 +56,16 @@ class Board:
             y += 1  # increment y access
             x = 1  # reset x
             self.board.append(boardLine)
-            # print(self.board)
 
     def get_tiles(self, level_file):
         self.read_level(level_file)
         return self.tiles;
+
+    def remove_tile(self, x, y):
+        for tile in self.tiles:
+            if tile.x == x and tile.y == y:
+                self.tiles.remove(tile)
+
 
     def check_jump(self, playerOne, playerTwo):
         # p1.update(direction, screen)

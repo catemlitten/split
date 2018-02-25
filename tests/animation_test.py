@@ -27,6 +27,8 @@ def main():
     direction = '-'
     board = Board()
     tiles = board.get_tiles("level2.txt");
+    for tile in tiles:
+        print(tile.x, tile.y)
     '''
     board object can be created here, and the parameter for the __init__ can be the level file at [path + '/levels/level1.txt']
     it can have check() to check if jumps are possible
@@ -78,8 +80,8 @@ def main():
         for i in range(len(tiles)):
             screen.blit(get_image(path + tiles[i].path), tiles[i].getRealXY())
        
-        p1.update(direction, screen, board.board)  # add board parameter to check if jump is possible
-        p2.update(direction, screen, board.board)
+        p1.update(direction, screen, board)  # add board parameter to check if jump is possible
+        p2.update(direction, screen, board)
 
         for i in range(len(anims)):
             anims[i].update(screen)
