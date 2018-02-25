@@ -1,5 +1,6 @@
 import pygame
 import os
+from board import *
 
 class Player:
 
@@ -48,6 +49,52 @@ class Player:
             elif self.d == 'right':
                 self.x += 1
 
+    def check_ahead(self, direction, board):
+        if direction == 'up':
+            next_tile = board.board[self.y - 2][self.x - 1]
+            if next_tile == 'w':
+                return False
+            elif next_tile == 'e':
+                print("Ded.")
+                board.remove_tile(self.x, self.y)
+                return True
+            else:
+                board.remove_tile(self.x, self.y)
+                return True
+        elif direction == 'down':
+            next_tile = board.board[self.y][self.x - 1]
+            if next_tile == 'w':
+                return False
+            elif next_tile == 'e':
+                print("Ded.")
+                board.remove_tile(self.x, self.y)
+                return True
+            else:
+                board.remove_tile(self.x, self.y)
+                return True
+        elif direction == 'right':
+            next_tile = board.board[self.y - 1][self.x]
+            if next_tile == 'w':
+                return False
+            elif next_tile == 'e':
+                print("Ded.")
+                board.remove_tile(self.x, self.y)
+                return True
+            else:
+                board.remove_tile(self.x, self.y)
+                return True
+        elif direction == 'left':
+            next_tile = board.board[self.y - 1][self.x - 2]
+            if next_tile == 'w':
+                return False
+            elif next_tile == 'e':
+                print("Ded.")
+                board.remove_tile(self.x, self.y)
+                return True
+            else:
+                board.remove_tile(self.x, self.y)
+                return True
+
     def update(self, direction, screen, board):  # add board parameter to control jump
         self.frame += 1
         if self.state == "idle" and self.frame > self.idleFrames:
@@ -61,22 +108,14 @@ class Player:
             self.frame = 1
         if self.state == "idle" and direction != "idle": # and board.check(x, y, direction [d]):
             self.d = direction
-            if direction == 'up':
-                spot = board[self.y - 2][self.x - 1]
+            # make a function to check the tile ahead based on the direction and only flip coin if not a wall
+            if self.check_ahead(direction, board) == False:
+                print("Ouch") # we should have a self.state = "wall"
+            else:
+                # board.remove_tile(self.x, self.y)
                 print(self.x, self.y)
-                print(spot)
-                if spot == 'e':
-                    print("Oh no, I've died.")
-                elif spot == 'w':
-                    print("Ouch!")
-            if direction == 'down':
-                spot = board[self.y][self.x - 1]
-            if direction == 'left':
-                spot = board[self.y - 1][self.x - 2]
-            if direction == 'right':
-                spot = board[self.y - 1][self.x]
-            self.state = "jump"
-            self.frame = 1
+                self.state = "jump"
+                self.frame = 1
         if self.state == "jump":
             self.location(True)
         self.drawFrame(screen)
