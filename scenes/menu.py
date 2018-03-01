@@ -30,12 +30,14 @@ class MenuScene(SceneSuper):
         textSurface = font.render(text, True, self.black)
         return textSurface, textSurface.get_rect()
 
-    def button(self, text, posX, posY, width, height, active, inactive, screen):
+    def button(self, text, posX, posY, width, height, active, inactive, screen, action=None):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
         if (posX + width) > mouse[0] > posX and (posY + height) > mouse[1] > posY:
             pygame.draw.rect(screen, inactive, (posX, posY, width, height))
+            if click[0] == 1 and action != None:
+                self.switch_to_scene(action)
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
         smallText = pygame.font.Font("freesansbold.ttf", 15)
@@ -48,8 +50,7 @@ class MenuScene(SceneSuper):
     def on_render(self, screen):
         self.setBackground(0, 0, screen)
 
-        self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen)
+        self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen, GameScene())
         self.button("Level Select", 650, 250, 100, 50, self.red, self.light_red, screen)
         self.button("Options", 650, 310, 100, 50, self.red, self.light_red, screen)
         self.button("Quit Game", 650, 370, 100, 50, self.red, self.light_red, screen)
-       # screen.fill((255, 0, 0)) #just blank red screen
