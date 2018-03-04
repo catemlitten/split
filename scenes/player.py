@@ -53,47 +53,47 @@ class Player:
         if direction == 'up':
             next_tile = board.board[self.y - 2][self.x - 1]
             if next_tile == 'w':
-                return "wall"
+                return ["wall", self.x, self.y]
             elif next_tile == 'e':
                 print("Ded.")
                 board.remove_tile(self.x, self.y, screen)
-                return "dead"
+                return ["dead", self.x, self.y]
             else:
                 board.remove_tile(self.x, self.y, screen)
-                return True
+                return ["moving", self.x, self.y]
         elif direction == 'down':
             next_tile = board.board[self.y][self.x - 1]
             if next_tile == 'w':
-                return "wall"
+                return ["wall", self.x, self.y]
             elif next_tile == 'e':
                 print("Ded.")
                 board.remove_tile(self.x, self.y, screen)
-                return "dead"
+                return ["dead", self.x, self.y]
             else:
                 board.remove_tile(self.x, self.y, screen)
-                return True
+                return ["moving", self.x, self.y]
         elif direction == 'right':
             next_tile = board.board[self.y - 1][self.x]
             if next_tile == 'w':
-                return "wall"
+                return ["wall", self.x, self.y]
             elif next_tile == 'e':
                 print("Ded.")
                 board.remove_tile(self.x, self.y, screen)
-                return "dead"
+                return ["dead", self.x, self.y]
             else:
                 board.remove_tile(self.x, self.y, screen)
-                return True
+                return ["moving", self.x, self.y]
         elif direction == 'left':
             next_tile = board.board[self.y - 1][self.x - 2]
             if next_tile == 'w':
-                return "wall"
+                return ["wall", self.x, self.y]
             elif next_tile == 'e':
                 print("Ded.")
                 board.remove_tile(self.x, self.y, screen)
-                return "dead"
+                return ["dead", self.x, self.y]
             else:
                 board.remove_tile(self.x, self.y, screen)
-                return True
+                return ["moving", self.x, self.y]
 
     def update(self, direction, screen, board):  # add board parameter to control jump
         self.frame += 1
@@ -110,14 +110,16 @@ class Player:
             self.d = direction
             # make a function to check the tile ahead based on the direction and only flip coin if not a wall
             whats_next = self.check_ahead(direction, board, screen)
-            if whats_next == "wall":
+            if whats_next[0] == "wall":
                 print("Ouch") # we should have a self.state = "wall"
-            elif whats_next == "dead":
-                return "dead"
+                return whats_next
+            elif whats_next[0] == "dead":
+                return whats_next
             else:
                 # board.remove_tile(self.x, self.y)
                 self.state = "jump"
                 self.frame = 1
+                return whats_next
         if self.state == "jump":
             self.location(True)
         self.drawFrame(screen)

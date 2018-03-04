@@ -33,6 +33,7 @@ class GameScene(SceneSuper):
         self.particles = []
         for i in range(35):
             self.particles.append([random.randrange(0, 800), random.randrange(0, 600), random.randrange(1, 6)])
+        self.fallingCoins = []
 
     def handle_input(self, events, keys):
         pass
@@ -66,8 +67,23 @@ class GameScene(SceneSuper):
         p1_status = self.p1.update(direction, screen, self.board)
         p2_status = self.p2.update(direction, screen, self.board)
 
-        if p1_status == "dead" or p2_status == "dead":
+        if p1_status[0] == "dead" or p2_status[0] == "dead":
             player_dead = True
+        if p1_status[0] == "moving":
+            print("drop tile player 1")
+            if frame % 60 == 0:
+                fallingCoin = Animator(self.path + '/animation/coin/', p1_status[1], p1_status[2])
+                fallingCoin.realX += 12.5
+                fallingCoin.realY += 30
+                self.fallingCoins.append([fallingCoin, 0])
+            for i in range(len(self.fallingCoins) - 1, -1, -1):
+                self.fallingCoins[i][1] += 0.3
+                self.fallingCoins[i][0].realY += self.fallingCoins[i][1]
+                self.fallingCoins[i][0].update(screen)
+                if self.fallingCoins[i][0].realY > 600:
+                    del self.fallingCoins[i]
+        if p2_status[0] == "moving":
+            print("drop tile player 2")
 
         if frame % 10 == 0:
             self.particles.append([random.randrange(0, 800), 610, random.randrange(1, 6)])
