@@ -106,6 +106,9 @@ def main():
     ]
 
     fallingCoins = []
+    particles = []
+    for i in range(35):
+        particles.append([random.randrange(0,800),random.randrange(0,600),random.randrange(1,6)])
     
     frame = 0
 
@@ -151,6 +154,15 @@ def main():
             if fallingCoins[i][0].realY > 600:
                 del fallingCoins[i]
                 #print(fallingCoins)
+
+        if frame % 10 == 0:
+            particles.append([random.randrange(0,800),610,random.randrange(1,6)])
+
+        for i in range(len(particles)-1,-1,-1):
+            pygame.draw.circle(screen, (255,255,255,100), (particles[i][0], particles[i][1]), particles[i][2], 1)
+            particles[i][1] -= particles[i][2]
+            if particles[i][1] < -10:
+                del particles[i]
        
         p1.update(direction, screen) #add board parameter to check if jump is possible
         p2.update(direction, screen)
