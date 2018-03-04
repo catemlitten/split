@@ -37,7 +37,10 @@ class MenuScene(SceneSuper):
         if (posX + width) > mouse[0] > posX and (posY + height) > mouse[1] > posY:
             pygame.draw.rect(screen, inactive, (posX, posY, width, height))
             if click[0] == 1 and action != None:
-                self.switch_to_scene(action)
+                if action != 'abort':
+                    self.switch_to_scene(action)
+                else:
+                    self.abort()
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
         smallText = pygame.font.Font("freesansbold.ttf", 15)
@@ -47,10 +50,12 @@ class MenuScene(SceneSuper):
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
 
-    def on_render(self, screen):
+    def on_render(self, screen, clock):
         self.setBackground(0, 0, screen)
 
         self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen, GameScene())
         self.button("Level Select", 650, 250, 100, 50, self.red, self.light_red, screen)
         self.button("Options", 650, 310, 100, 50, self.red, self.light_red, screen)
-        self.button("Quit Game", 650, 370, 100, 50, self.red, self.light_red, screen)
+        self.button("Quit Game", 650, 370, 100, 50, self.red, self.light_red, screen, 'abort')
+        pygame.display.flip()
+        clock.tick(60)

@@ -9,19 +9,27 @@ import os
 
 class GameScene(SceneSuper):
 
-
-    def get_image(self, path):
-        global _image_library
-        image = self._image_library.get(path)
-        if image == None:
-            canonicalized_path = path.replace('/', os.sep).replace('/', os.sep)
-            image = pygame.image.load(canonicalized_path)
-            self._image_library[path] = image
-        return image
-
     def __init__(self):
         SceneSuper.__init__(self)
-        self._image_library = {}
+        self.background = '/animation/bg_2.png'
+        self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
+        self.board = Board()
+        self.tiles = self.board.get_tiles("level2.txt");
+        self.p1 = Player(self.path + '/animation/character1/', self.board.player1[0], self.board.player1[1])
+        self.p2 = Player(self.path + '/animation/character2/', self.board.player2[0], self.board.player2[1])
+        self.emptySpots = self.board.emptySpots
+        self.animationSpots = []
+        for x in range(4):
+            rand1 = random.randint(0, len(self.emptySpots) - 1)
+            self.animationSpots.append(self.emptySpots[rand1])
+            del self.emptySpots[rand1]
+
+        self.anims = [
+            Animator(self.path + '/animation/coin/', self.animationSpots[0][0], self.animationSpots[0][1]),
+            Animator(self.path + '/animation/dice2/', self.animationSpots[1][0], self.animationSpots[1][1]),
+            Animator(self.path + '/animation/dice1/', self.animationSpots[2][0], self.animationSpots[2][1]),
+            Animator(self.path + '/animation/pin2/', self.animationSpots[3][0], self.animationSpots[3][1])
+        ]
 
     def handle_input(self, events, keys):
         pass
@@ -29,28 +37,10 @@ class GameScene(SceneSuper):
     def on_update(self):
         pass
 
-    def on_render(self, screen):
+    def on_render(self, screen, clock):
         done = False
         player_dead = False
-        background = '/animation/bg_2.png'
-        path = os.path.dirname(os.path.realpath(__file__)) + '/..'
-        board = Board()
-        tiles = board.get_tiles("level2.txt");
-        p1 = Player(path + '/animation/character1/', board.player1[0], board.player1[1])
-        p2 = Player(path + '/animation/character2/', board.player2[0], board.player2[1])
-        emptySpots = board.emptySpots
-        animationSpots = []
-        for x in range(4):
-            rand1 = random.randint(0, len(emptySpots) - 1)
-            animationSpots.append(emptySpots[rand1])
-            del emptySpots[rand1]
 
-        anims = [
-            Animator(path + '/animation/coin/', animationSpots[0][0], animationSpots[0][1]),
-            Animator(path + '/animation/dice2/', animationSpots[1][0], animationSpots[1][1]),
-            Animator(path + '/animation/dice1/', animationSpots[2][0], animationSpots[2][1]),
-            Animator(path + '/animation/pin2/', animationSpots[3][0], animationSpots[3][1])
-        ]
 
         if pygame.key.get_pressed()[pygame.K_w]:
             direction = 'up'
@@ -64,18 +54,20 @@ class GameScene(SceneSuper):
             direction = 'idle'
 
         screen.fill((255, 255, 255))
-        screen.blit(self.get_image(path + background), (0, 0))
-        screen.blit(self.get_image(path + '/animation/label.png'), (0, 560))
+        screen.blit(self.get_image(self.path + self.background), (0, 0))
+        screen.blit(self.get_image(self.path + '/animation/label.png'), (0, 560))
 
-        for i in range(len(tiles)):
-            screen.blit(self.get_image(path + tiles[i].path), tiles[i].getRealXY())
+        for i in range(len(self.tiles)):
+            screen.blit(self.get_image(self.path + self.tiles[i].path), self.tiles[i].getRealXY())
 
-        p1_status = p1.update(direction, screen, board)
-        print(p1_status)
-        p2_status = p2.update(direction, screen, board)
+        p1_status = self.p1.update(direction, screen, self.board)
+        p2_status = self.p2.update(direction, screen, self.board)
 
         if p1_status == "dead" or p2_status == "dead":
             player_dead = True
 
-        for i in range(len(anims)):
-            anims[i].update(screen)
+        for i in range(len(self.anims)):
+            self.anims[i].update(screen)
+
+        pygame.display.flip()
+        clock.tick(60)
