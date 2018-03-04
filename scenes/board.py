@@ -1,4 +1,6 @@
 from tile import *
+from animator import *
+import os
 
 class Board:
 
@@ -12,6 +14,8 @@ class Board:
         self.player2 = [0, 0]
         self.emptySpots = []
         self.board = []
+        self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
+        self.fallingCoins = []
 
 
     def read_level(self, level_file):
@@ -60,7 +64,18 @@ class Board:
         self.read_level(level_file)
         return self.tiles;
 
-    def remove_tile(self, x, y):
+    def remove_tile(self, x, y, screen):
         for tile in self.tiles:
             if tile.x == x and tile.y == y:
                 self.tiles.remove(tile)
+            #if frame % 60 == 0:
+                fallingCoin = Animator(self.path + '/animation/coin/', tile.x, tile.y)
+                fallingCoin.realX += 12.5
+                fallingCoin.realY += 30
+                self.fallingCoins.append([fallingCoin, 0])
+            for i in range(len(self.fallingCoins) - 1, -1, -1):
+                self.fallingCoins[i][1] += 0.3
+                self.fallingCoins[i][0].realY += self.fallingCoins[i][1]
+                self.fallingCoins[i][0].update(screen)
+                if self.fallingCoins[i][0].realY > 600:
+                    del self.fallingCoins[i]

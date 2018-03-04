@@ -30,6 +30,9 @@ class GameScene(SceneSuper):
             Animator(self.path + '/animation/dice1/', self.animationSpots[2][0], self.animationSpots[2][1]),
             Animator(self.path + '/animation/pin2/', self.animationSpots[3][0], self.animationSpots[3][1])
         ]
+        self.particles = []
+        for i in range(35):
+            self.particles.append([random.randrange(0, 800), random.randrange(0, 600), random.randrange(1, 6)])
 
     def handle_input(self, events, keys):
         pass
@@ -40,7 +43,7 @@ class GameScene(SceneSuper):
     def on_render(self, screen, clock):
         done = False
         player_dead = False
-
+        frame = 0
 
         if pygame.key.get_pressed()[pygame.K_w]:
             direction = 'up'
@@ -66,8 +69,18 @@ class GameScene(SceneSuper):
         if p1_status == "dead" or p2_status == "dead":
             player_dead = True
 
+        if frame % 10 == 0:
+            self.particles.append([random.randrange(0, 800), 610, random.randrange(1, 6)])
+
+        for i in range(len(self.particles) - 1, -1, -1):
+            pygame.draw.circle(screen, (255, 255, 255, 100), (self.particles[i][0], self.particles[i][1]), self.particles[i][2], 1)
+            self.particles[i][1] -= self.particles[i][2]
+            if self.particles[i][1] < -10:
+                del self.particles[i]
+
         for i in range(len(self.anims)):
             self.anims[i].update(screen)
 
+        frame += 1
         pygame.display.flip()
         clock.tick(60)
