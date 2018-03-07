@@ -9,12 +9,12 @@ import os
 
 class GameScene(SceneSuper):
 
-    def __init__(self):
+    def __init__(self, level, background):
         SceneSuper.__init__(self)
-        self.background = '/animation/bg_2.png'
+        self.background = background
         self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
         self.board = Board()
-        self.tiles = self.board.get_tiles("level2.txt");
+        self.tiles = self.board.get_tiles(level);
         self.p1 = Player(self.path + '/animation/character1/', self.board.player1[0], self.board.player1[1])
         self.p2 = Player(self.path + '/animation/character2/', self.board.player2[0], self.board.player2[1])
         self.emptySpots = self.board.emptySpots
@@ -35,6 +35,15 @@ class GameScene(SceneSuper):
             self.particles.append([random.randrange(0, 800), random.randrange(0, 600), random.randrange(1, 6)])
         self.fallingCoins = []
 
+    def set_tiles(self, level):
+        self.tiles = self.board.get_tiles(level)
+
+    def get_background(self):
+        return self.background
+
+    def set_background(self, image):
+        self.background = image
+    
     def handle_input(self, events, keys):
         pass
 
