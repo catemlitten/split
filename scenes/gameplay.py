@@ -1,4 +1,5 @@
 from super import SceneSuper
+from gameover import GameOver
 from player import *
 from animator import *
 from tile import *
@@ -51,8 +52,6 @@ class GameScene(SceneSuper):
         pass
 
     def on_render(self, screen, clock):
-        done = False
-        player_dead = False
         frame = 0
 
         if pygame.key.get_pressed()[pygame.K_w]:
@@ -77,7 +76,7 @@ class GameScene(SceneSuper):
         p2_status = self.p2.update(direction, screen, self.board)
 
         if p1_status[0] == "dead" or p2_status[0] == "dead":
-            player_dead = True
+            self.switch_to_scene(GameOver())
         if p1_status[0] == "moving":
             print("drop tile player 1")
             if frame % 60 == 0:
