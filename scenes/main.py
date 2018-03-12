@@ -17,10 +17,7 @@ def play_game(width, height, fps, starting_scene):
             if event.type == pygame.QUIT:
                 quit_flag = True
             elif event.type == pygame.KEYDOWN:
-                if pressed_keys[pygame.K_p]:
-                    print("pause")
-                   # pause() # pause game on typing 'p'
-                elif pressed_keys[pygame.K_q]:
+                if event.key == pygame.K_q:
                     quit_flag = True # quit game on typing 'q'
             if quit_flag:
                 active_scene.abort()
