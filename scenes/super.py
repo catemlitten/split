@@ -1,7 +1,7 @@
 import os
 import pygame
 
-class SceneSuper:
+class SceneSuper():
     _image_library = {}
 
     def __init__(self):
