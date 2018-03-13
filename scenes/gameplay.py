@@ -1,4 +1,5 @@
 from super import SceneSuper
+from gameover import GameOver
 from player import *
 from animator import *
 from tile import *
@@ -77,8 +78,7 @@ class GameScene(SceneSuper):
         p2_status = self.p2.update(direction, screen, self.board)
 
         if p1_status[0] == "dead" or p2_status[0] == "dead":
-            player_dead = True
-
+            self.switch_to_scene(GameOver())
         if p1_status[0] == "moving":
             print("drop tile player 1")
             fallingCoin = Animator(self.path + '/animation/coin/', p1_status[1], p1_status[2])
