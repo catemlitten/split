@@ -68,15 +68,15 @@ class LevelSelect(SceneSuper):
         SceneSuper.__init__(self)
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
-        self.red = (255, 0, 0)
-        self.light_red = (100, 0, 0)
+        self.red = (252, 169, 173)
+        self.light_red = (255, 132, 138)
         self.green = (0, 255, 0)
         self.light_green = (0, 100, 0)
-        self.blue = (0, 0, 255)
-        self.light_blue = (0, 0, 100)
+        self.blue = (196, 218, 255)
+        self.light_blue = (145, 183, 247)
         self.lvlBackground = None #added these variables so that they can be used in GameScene
         self.lvlTxt = None
-        self.screenImg = pygame.image.load("LevelSelect.png")
+        self.screenImg = pygame.image.load("gregoire-jeanneau-unsplash.jpg")
 
     def setBackground(self, posX, posY, screen):
         screen.blit(self.screenImg, (posX, posY))
