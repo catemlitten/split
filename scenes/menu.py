@@ -9,8 +9,8 @@ class MenuScene(SceneSuper):
         SceneSuper.__init__(self)
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
-        self.red = (255, 0, 0)
-        self.light_red = (100, 0, 0)
+        self.red = (249, 24, 35)
+        self.light_red = (168, 13, 21)
         self.green = (0, 255, 0)
         self.blue = (0, 0, 255)
         self.screenImg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + "/SplitMenuScreen.png")
@@ -57,7 +57,7 @@ class MenuScene(SceneSuper):
 
         self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen, GameScene(1, '/animation/bg_2.png'))
         self.button("Level Select", 650, 250, 100, 50, self.red, self.light_red, screen, LevelSelect())
-        self.button("Options", 650, 310, 100, 50, self.red, self.light_red, screen)
+        self.button("About", 650, 310, 100, 50, self.red, self.light_red, screen)
         self.button("Quit Game", 650, 370, 100, 50, self.red, self.light_red, screen, 'abort')
         pygame.display.flip()
         clock.tick(60)
@@ -104,11 +104,11 @@ class LevelSelect(SceneSuper):
             pygame.draw.rect(screen, inactive, (posX, posY, width, height))
             if click[0] == 1 and action != None:
                 if action == "level2.txt":
-                    self.switch_to_scene(GameScene(2, '/animation/bg_2.png'))
+                    self.switch_to_scene(GameScene(2, '/animation/franck-veschi-unsplash.jpg'))
                 elif action == "level1.txt":
                     self.switch_to_scene(GameScene(1,'/animation/bg_2.png'))
                 elif action == "level3.txt":
-                    self.switch_to_scene(GameScene(3,'/animation/bg_2.png'))
+                    self.switch_to_scene(GameScene(3,'/animation/pablo-heimplatz-unsplash.jpg'))
                 elif action != 'abort':
                     self.switch_to_scene(action)
                 else:
@@ -136,7 +136,7 @@ class LevelSelect(SceneSuper):
 
         self.button("Leve One", 230, 250, 100, 50, self.blue, self.light_blue, screen, "level1.txt")
         self.button("Level Two", 360, 250, 100, 50, self.blue, self.light_blue, screen, "level2.txt")
-        self.button("Level Three", 490, 250, 100, 50, self.blue, self.light_blue, screen)
+        self.button("Level Three", 490, 250, 100, 50, self.blue, self.light_blue, screen, "level3.txt")
         self.button("Main Menu", 280, 350, 100, 50, self.red, self.light_red, screen, MenuScene())
         self.button("Quit Game", 410, 350, 100, 50, self.red, self.light_red, screen, 'abort')
         pygame.display.flip()

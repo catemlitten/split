@@ -15,6 +15,7 @@ class GameScene(SceneSuper):
         self.background = background
         self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
         self.board = Board()
+        self.level = level
         self.tiles = self.board.get_tiles(self.path + "/levels/level" + str(level) + ".txt");
         self.p1 = Player(self.path + '/animation/character1/', self.board.player1[0], self.board.player1[1])
         self.p2 = Player(self.path + '/animation/character2/', self.board.player2[0], self.board.player2[1])
@@ -69,7 +70,7 @@ class GameScene(SceneSuper):
 
         screen.fill((255, 255, 255))
         screen.blit(self.get_image(self.path + self.background), (0, 0))
-        screen.blit(self.get_image(self.path + '/animation/label.png'), (0, 560))
+        screen.blit(self.get_image(self.path + '/animation/label_level'+str(self.level)+'.png'), (0, 560))
 
         for i in range(len(self.tiles)):
             screen.blit(self.get_image(self.path + self.tiles[i].path), self.tiles[i].getRealXY())
