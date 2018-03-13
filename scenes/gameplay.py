@@ -9,16 +9,17 @@ import os
 
 class GameScene(SceneSuper):
 
-    def __init__(self, level, background):
+    def __init__(self, level):
         SceneSuper.__init__(self)
-        self.background = background
+        self.background = '/animation/bg_2.png'
         self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
         self.board = Board()
-        self.tiles = self.board.get_tiles(level);
+        self.tiles = self.board.get_tiles(self.path + "/levels/level" + str(level) + ".txt");
         self.p1 = Player(self.path + '/animation/character1/', self.board.player1[0], self.board.player1[1])
         self.p2 = Player(self.path + '/animation/character2/', self.board.player2[0], self.board.player2[1])
         self.emptySpots = self.board.emptySpots
         self.animationSpots = []
+        self.frame = 0
         for x in range(4):
             rand1 = random.randint(0, len(self.emptySpots) - 1)
             self.animationSpots.append(self.emptySpots[rand1])
@@ -53,15 +54,14 @@ class GameScene(SceneSuper):
     def on_render(self, screen, clock):
         done = False
         player_dead = False
-        frame = 0
 
-        if pygame.key.get_pressed()[pygame.K_w]:
+        if pygame.key.get_pressed()[pygame.K_w] or pygame.key.get_pressed()[pygame.K_UP]:
             direction = 'up'
-        elif pygame.key.get_pressed()[pygame.K_a]:
+        elif pygame.key.get_pressed()[pygame.K_a] or pygame.key.get_pressed()[pygame.K_LEFT]:
             direction = 'left'
-        elif pygame.key.get_pressed()[pygame.K_s]:
+        elif pygame.key.get_pressed()[pygame.K_s] or pygame.key.get_pressed()[pygame.K_DOWN]:
             direction = 'down'
-        elif pygame.key.get_pressed()[pygame.K_d]:
+        elif pygame.key.get_pressed()[pygame.K_d] or pygame.key.get_pressed()[pygame.K_RIGHT]:
             direction = 'right'
         else:
             direction = 'idle'
@@ -78,23 +78,28 @@ class GameScene(SceneSuper):
 
         if p1_status[0] == "dead" or p2_status[0] == "dead":
             player_dead = True
+
         if p1_status[0] == "moving":
             print("drop tile player 1")
-            if frame % 60 == 0:
-                fallingCoin = Animator(self.path + '/animation/coin/', p1_status[1], p1_status[2])
-                fallingCoin.realX += 12.5
-                fallingCoin.realY += 30
-                self.fallingCoins.append([fallingCoin, 0])
-            for i in range(len(self.fallingCoins) - 1, -1, -1):
-                self.fallingCoins[i][1] += 0.3
-                self.fallingCoins[i][0].realY += self.fallingCoins[i][1]
-                self.fallingCoins[i][0].update(screen)
-                if self.fallingCoins[i][0].realY > 600:
-                    del self.fallingCoins[i]
+            fallingCoin = Animator(self.path + '/animation/coin/', p1_status[1], p1_status[2])
+            fallingCoin.realX += 12.5
+            fallingCoin.realY += 30
+            self.fallingCoins.append([fallingCoin, 0])
         if p2_status[0] == "moving":
             print("drop tile player 2")
+            fallingCoin = Animator(self.path + '/animation/coin/', p2_status[1], p2_status[2])
+            fallingCoin.realX += 12.5
+            fallingCoin.realY += 30
+            self.fallingCoins.append([fallingCoin, 0])
+        
+        for i in range(len(self.fallingCoins) - 1, -1, -1):
+            self.fallingCoins[i][1] += 0.3
+            self.fallingCoins[i][0].realY += self.fallingCoins[i][1]
+            self.fallingCoins[i][0].update(screen)
+            if self.fallingCoins[i][0].realY > 600:
+                del self.fallingCoins[i]
 
-        if frame % 10 == 0:
+        if self.frame % 10 == 0:
             self.particles.append([random.randrange(0, 800), 610, random.randrange(1, 6)])
 
         for i in range(len(self.particles) - 1, -1, -1):
@@ -106,6 +111,6 @@ class GameScene(SceneSuper):
         for i in range(len(self.anims)):
             self.anims[i].update(screen)
 
-        frame += 1
+        self.frame += 1
         pygame.display.flip()
-        clock.tick(60)
+        #clock.tick(60)

@@ -1,6 +1,7 @@
 from super import SceneSuper
 import pygame
 from gameplay import GameScene
+import os
 
 class MenuScene(SceneSuper):
 
@@ -12,13 +13,13 @@ class MenuScene(SceneSuper):
         self.light_red = (100, 0, 0)
         self.green = (0, 255, 0)
         self.blue = (0, 0, 255)
-        self.screenImg = pygame.image.load("MenuScreen.png")
+        self.screenImg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + "/SplitMenuScreen.png")
 
     def handle_input(self, events, keys):
         for event in events:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 #change scene
-                self.switch_to_scene(GameScene())
+                self.switch_to_scene(GameScene(1))
 
     def on_update(self):
         pass
@@ -54,8 +55,8 @@ class MenuScene(SceneSuper):
     def on_render(self, screen, clock):
         self.setBackground(0, 0, screen)
 
-        self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen, GameScene("level1.txt",'/animation/bg_2.png'))
-        self.button("Level Select", 650, 250, 100, 50, self.red, self.light_red, screen, LevelSelect())
+        self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen, GameScene(1))
+        self.button("Level Select", 650, 250, 100, 50, self.red, self.light_red, screen)
         self.button("Options", 650, 310, 100, 50, self.red, self.light_red, screen)
         self.button("Quit Game", 650, 370, 100, 50, self.red, self.light_red, screen, 'abort')
         pygame.display.flip()
