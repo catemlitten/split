@@ -58,14 +58,15 @@ class Player:
                 if next_tile == 'w':
                     return ["wall", self.x, self.y]
                 elif next_tile == 'e':
-                    print("Ded.")
                     board.remove_tile(self.x, self.y, screen)
                     return ["dead", self.x, self.y]
+                elif next_tile == 'q' or next_tile == 'p':
+                    board.remove_tile(self.x, self.y, screen)
+                    return ["victory", self.x, self.y]
                 else:
                     board.remove_tile(self.x, self.y, screen)
                     return ["moving", self.x, self.y]
             except IndexError:
-                    print("Ded.")
                     board.remove_tile(self.x, self.y, screen)
                     return ["dead", self.x, self.y]
         elif direction == 'down':
@@ -78,11 +79,13 @@ class Player:
                     print("Ded.")
                     board.remove_tile(self.x, self.y, screen)
                     return ["dead", self.x, self.y]
+                elif next_tile == 'q' or next_tile == 'p':
+                    board.remove_tile(self.x, self.y, screen)
+                    return ["victory", self.x, self.y]
                 else:
                     board.remove_tile(self.x, self.y, screen)
                     return ["moving", self.x, self.y]
             except IndexError:
-                    print("Ded.")
                     board.remove_tile(self.x, self.y, screen)
                     return ["dead", self.x, self.y]
         elif direction == 'right':
@@ -92,14 +95,15 @@ class Player:
                 if next_tile == 'w':
                     return ["wall", self.x, self.y]
                 elif next_tile == 'e':
-                    print("Ded.")
                     board.remove_tile(self.x, self.y, screen)
                     return ["dead", self.x, self.y]
+                elif next_tile == 'q' or next_tile == 'p':
+                    board.remove_tile(self.x, self.y, screen)
+                    return ["victory", self.x, self.y]
                 else:
                     board.remove_tile(self.x, self.y, screen)
                     return ["moving", self.x, self.y]
             except IndexError:
-                    print("Ded.")
                     board.remove_tile(self.x, self.y, screen)
                     return ["dead", self.x, self.y]
         elif direction == 'left':
@@ -109,14 +113,15 @@ class Player:
                 if next_tile == 'w':
                     return ["wall", self.x, self.y]
                 elif next_tile == 'e':
-                    print("Ded.")
                     board.remove_tile(self.x, self.y, screen)
                     return ["dead", self.x, self.y]
+                elif next_tile == 'q' or next_tile == 'p':
+                    board.remove_tile(self.x, self.y, screen)
+                    return ["victory", self.x, self.y]
                 else:
                     board.remove_tile(self.x, self.y, screen)
                     return ["moving", self.x, self.y]
             except IndexError:
-                    print("Ded.")
                     board.remove_tile(self.x, self.y, screen)
                     return ["dead", self.x, self.y]
 

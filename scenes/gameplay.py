@@ -1,5 +1,7 @@
 from super import SceneSuper
 from gameover import GameOver
+from winner import WonLevel
+from victory import Victor
 from player import *
 from animator import *
 from tile import *
@@ -56,6 +58,7 @@ class GameScene(SceneSuper):
     def on_render(self, screen, clock):
         done = False
         player_dead = False
+        victory_count = 0
 
         if pygame.key.get_pressed()[pygame.K_w] or pygame.key.get_pressed()[pygame.K_UP]:
             direction = 'up'
@@ -80,6 +83,14 @@ class GameScene(SceneSuper):
 
         if p1_status[0] == "dead" or p2_status[0] == "dead":
             self.switch_to_scene(GameOver())
+        if p1_status[0] == "victory":
+            victory_count += 1
+            p1 = Victor(self.path + '/animation/character3/', self.board.player1[0], self.board.player1[1])
+        if p2_status[0] == "victory":
+            victory_count += 1
+            p1 = Victor(self.path + '/animation/character4/', self.board.player2[0], self.board.player2[1])
+        if victory_count == 2:
+            self.switch_to_scene(WonLevel())
         if p1_status[0] == "moving":
             fallingCoin = Animator(self.path + '/animation/coin/', p1_status[1], p1_status[2])
             fallingCoin.realX += 12.5
