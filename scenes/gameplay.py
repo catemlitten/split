@@ -10,9 +10,9 @@ import os
 
 class GameScene(SceneSuper):
 
-    def __init__(self, level):
+    def __init__(self, level, background):
         SceneSuper.__init__(self)
-        self.background = '/animation/bg_2.png'
+        self.background = background
         self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
         self.board = Board()
         self.tiles = self.board.get_tiles(self.path + "/levels/level" + str(level) + ".txt");
@@ -80,13 +80,11 @@ class GameScene(SceneSuper):
         if p1_status[0] == "dead" or p2_status[0] == "dead":
             self.switch_to_scene(GameOver())
         if p1_status[0] == "moving":
-            print("drop tile player 1")
             fallingCoin = Animator(self.path + '/animation/coin/', p1_status[1], p1_status[2])
             fallingCoin.realX += 12.5
             fallingCoin.realY += 30
             self.fallingCoins.append([fallingCoin, 0])
         if p2_status[0] == "moving":
-            print("drop tile player 2")
             fallingCoin = Animator(self.path + '/animation/coin/', p2_status[1], p2_status[2])
             fallingCoin.realX += 12.5
             fallingCoin.realY += 30
@@ -99,7 +97,7 @@ class GameScene(SceneSuper):
             if self.fallingCoins[i][0].realY > 600:
                 del self.fallingCoins[i]
 
-        if self.frame % 10 == 0:
+        if self.frame % 3 == 0:
             self.particles.append([random.randrange(0, 800), 610, random.randrange(1, 6)])
 
         for i in range(len(self.particles) - 1, -1, -1):
@@ -113,4 +111,3 @@ class GameScene(SceneSuper):
 
         self.frame += 1
         pygame.display.flip()
-        #clock.tick(60)

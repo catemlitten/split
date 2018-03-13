@@ -55,8 +55,8 @@ class MenuScene(SceneSuper):
     def on_render(self, screen, clock):
         self.setBackground(0, 0, screen)
 
-        self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen, GameScene(1))
-        self.button("Level Select", 650, 250, 100, 50, self.red, self.light_red, screen)
+        self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen, GameScene(1, '/animation/bg_2.png'))
+        self.button("Level Select", 650, 250, 100, 50, self.red, self.light_red, screen, LevelSelect())
         self.button("Options", 650, 310, 100, 50, self.red, self.light_red, screen)
         self.button("Quit Game", 650, 370, 100, 50, self.red, self.light_red, screen, 'abort')
         pygame.display.flip()
@@ -104,11 +104,11 @@ class LevelSelect(SceneSuper):
             pygame.draw.rect(screen, inactive, (posX, posY, width, height))
             if click[0] == 1 and action != None:
                 if action == "level2.txt":
-                    self.switch_to_scene(GameScene(action, '/animation/bg_2.png'))
+                    self.switch_to_scene(GameScene(2, '/animation/bg_2.png'))
                 elif action == "level1.txt":
-                    self.switch_to_scene(GameScene(action,'/animation/bg_2.png'))
+                    self.switch_to_scene(GameScene(1,'/animation/bg_2.png'))
                 elif action == "level3.txt":
-                    self.switch_to_scene(GameScene(action,'/animation/bg_2.png'))
+                    self.switch_to_scene(GameScene(3,'/animation/bg_2.png'))
                 elif action != 'abort':
                     self.switch_to_scene(action)
                 else:
@@ -116,6 +116,7 @@ class LevelSelect(SceneSuper):
                     
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
+
         smallText = pygame.font.Font("freesansbold.ttf", 15)
         midText = pygame.font.Font("freesansbold.ttf", 70)
         largeText = pygame.font.Font("freesansbold.ttf", 115)
