@@ -12,9 +12,10 @@ import os
 
 class GameScene(SceneSuper):
 
-    def __init__(self, level, background):
+    def __init__(self, level, background, menuObject):
         SceneSuper.__init__(self)
         self.background = background
+        self.menuObject = menuObject #otherwise circular imports.
         self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
         self.board = Board()
         self.level = level
@@ -82,7 +83,7 @@ class GameScene(SceneSuper):
         p2_status = self.p2.update(direction, screen, self.board)
 
         if p1_status[0] == "dead" or p2_status[0] == "dead":
-            self.switch_to_scene(GameOver())
+            self.switch_to_scene(GameOver(self.menuObject))
         if p1_status[0] == "victory":
             print("Victory player 1")
             self.victory_count += 1

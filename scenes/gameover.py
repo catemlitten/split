@@ -1,4 +1,5 @@
 from super import SceneSuper
+#from menu import MenuScene
 from player import *
 from animator import *
 from tile import *
@@ -9,10 +10,17 @@ import os
 
 class GameOver(SceneSuper):
 
-    def __init__(self):
+    def __init__(self, menuObject):
         SceneSuper.__init__(self)
         self.background = '/animation/gameoverwide.jpg'
+        self.menuObject = menuObject
         self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
+        self.white = (255, 255, 255)
+        self.black = (0, 0, 0)
+        self.red = (249, 24, 35)
+        self.light_red = (168, 13, 21)
+        self.green = (0, 255, 0)
+        self.blue = (0, 0, 255)
         self.particles = []
         for i in range(35):
             self.particles.append([random.randrange(0, 800), random.randrange(0, 600), random.randrange(1, 6)])
@@ -22,11 +30,38 @@ class GameOver(SceneSuper):
 
     def on_update(self):
         pass
+    
+    def button(self, text, posX, posY, width, height, active, inactive, screen, action=None):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if (posX + width) > mouse[0] > posX and (posY + height) > mouse[1] > posY:
+            pygame.draw.rect(screen, inactive, (posX, posY, width, height))
+            if click[0] == 1 and action != None:
+                if action != 'abort':
+                    self.switch_to_scene(action)
+                else:
+                    self.abort()
+        else:
+            pygame.draw.rect(screen, active, (posX, posY, width, height))
+            
+        smallText = pygame.font.Font("freesansbold.ttf", 15)
+        midText = pygame.font.Font("freesansbold.ttf", 70)
+        largeText = pygame.font.Font("freesansbold.ttf", 115)
+        textSurf, textRect = self.text_objects(text, smallText)
+        textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
+        screen.blit(textSurf, textRect)
+
+    def text_objects(self, text, font):
+        textSurface = font.render(text, True, self.black)
+        return textSurface, textSurface.get_rect()
 
     def on_render(self, screen, clock):
         frame = 0
         screen.fill((255, 255, 255))
         screen.blit(self.get_image(self.path + self.background), (0, 0))
+
+        self.button("Play again?", 650, 250, 100, 50, self.red, self.light_red, screen, self.menuObject)
 
         if frame % 10 == 0:
             self.particles.append([random.randrange(0, 800), 610, random.randrange(1, 6)])
