@@ -65,7 +65,7 @@ class GameOver(SceneSuper):
             self.particles.append([random.randrange(0, 800), 610, random.randrange(1, 6)])
 
         for i in range(len(self.particles) - 1, -1, -1):
-            pygame.draw.circle(screen, (255, 255, 255, 100), (self.particles[i][0], self.particles[i][1]), self.particles[i][2], 1)
+            pygame.draw.circle(screen, (249, 34, 45, 100), (self.particles[i][0], self.particles[i][1]), self.particles[i][2], 1)
             self.particles[i][1] -= self.particles[i][2]
             if self.particles[i][1] < -10:
                 del self.particles[i]
