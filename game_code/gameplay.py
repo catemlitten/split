@@ -2,6 +2,7 @@ from super import SceneSuper
 from gameover import GameOver
 from winner import WonLevel
 from victory import Victor
+from dead import DeadPlayer
 from player import *
 from animator import *
 from tile import *
@@ -81,6 +82,9 @@ class GameScene(SceneSuper):
         p2_status = self.p2.update(direction, screen, self.board)
 
         if p1_status[0] == "dead" or p2_status[0] == "dead":
+            print(p1_status[1])
+            self.p1 = DeadPlayer(self.path + '/animation/character1/', p1_status[1], p1_status[2])
+            self.p2 = DeadPlayer(self.path + '/animation/character2/', p2_status[1], p2_status[2])
             self.switch_to_scene(GameOver(self.menuObject))
         if p1_status[0] == "victory":
             print("Victory player 1")
