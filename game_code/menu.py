@@ -45,9 +45,9 @@ class MenuScene(SceneSuper):
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
             
-        smallText = pygame.font.Font("VT323-Regular.ttf", 20)
-        midText = pygame.font.Font("VT323-Regular.ttf", 70)
-        largeText = pygame.font.Font("VT323-Regular.ttf", 115)
+        smallText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 20)
+        midText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 70)
+        largeText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
@@ -77,7 +77,7 @@ class LevelSelect(SceneSuper):
         self.light_blue = (145, 183, 247)
         self.lvlBackground = None #added these variables so that they can be used in GameScene
         self.lvlTxt = None
-        self.screenImg = pygame.image.load("gregoire-jeanneau-unsplash.jpg")
+        self.screenImg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + "/gregoire-jeanneau-unsplash.jpg")
 
     def setBackground(self, posX, posY, screen):
         screen.blit(self.screenImg, (posX, posY))
@@ -118,9 +118,9 @@ class LevelSelect(SceneSuper):
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
 
-        smallText = pygame.font.Font("VT323-Regular.ttf", 20)
-        midText = pygame.font.Font("VT323-Regular.ttf", 70)
-        largeText = pygame.font.Font("VT323-Regular.ttf", 115)
+        smallText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 20)
+        midText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 70)
+        largeText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
