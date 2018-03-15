@@ -45,9 +45,9 @@ class MenuScene(SceneSuper):
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
             
-        smallText = pygame.font.Font("freesansbold.ttf", 15)
-        midText = pygame.font.Font("freesansbold.ttf", 70)
-        largeText = pygame.font.Font("freesansbold.ttf", 115)
+        smallText = pygame.font.Font("VT323-Regular.ttf", 20)
+        midText = pygame.font.Font("VT323-Regular.ttf", 70)
+        largeText = pygame.font.Font("VT323-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
@@ -118,9 +118,9 @@ class LevelSelect(SceneSuper):
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
 
-        smallText = pygame.font.Font("freesansbold.ttf", 15)
-        midText = pygame.font.Font("freesansbold.ttf", 70)
-        largeText = pygame.font.Font("freesansbold.ttf", 115)
+        smallText = pygame.font.Font("VT323-Regular.ttf", 20)
+        midText = pygame.font.Font("VT323-Regular.ttf", 70)
+        largeText = pygame.font.Font("VT323-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
@@ -135,7 +135,7 @@ class LevelSelect(SceneSuper):
     def on_render(self, screen, clock):
         self.setBackground(0, 0, screen)
 
-        self.button("Leve One", 230, 250, 100, 50, self.blue, self.light_blue, screen, "level1.txt",)
+        self.button("Level One", 230, 250, 100, 50, self.blue, self.light_blue, screen, "level1.txt",)
         self.button("Level Two", 360, 250, 100, 50, self.blue, self.light_blue, screen, "level2.txt")
         self.button("Level Three", 490, 250, 100, 50, self.blue, self.light_blue, screen, "level3.txt")
         self.button("Main Menu", 280, 350, 100, 50, self.red, self.light_red, screen, MenuScene())

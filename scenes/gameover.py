@@ -17,10 +17,7 @@ class GameOver(SceneSuper):
         self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
-        self.red = (249, 24, 35)
-        self.light_red = (168, 13, 21)
-        self.green = (0, 255, 0)
-        self.blue = (0, 0, 255)
+        self.gray = (203, 209, 219)
         self.particles = []
         for i in range(35):
             self.particles.append([random.randrange(0, 800), random.randrange(0, 600), random.randrange(1, 6)])
@@ -45,9 +42,9 @@ class GameOver(SceneSuper):
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
             
-        smallText = pygame.font.Font("freesansbold.ttf", 15)
-        midText = pygame.font.Font("freesansbold.ttf", 70)
-        largeText = pygame.font.Font("freesansbold.ttf", 115)
+        smallText = pygame.font.Font("PressStart2P-Regular.ttf", 10)
+        midText = pygame.font.Font("PressStart2P-Regular.ttf", 70)
+        largeText = pygame.font.Font("PressStart2P-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
@@ -61,7 +58,8 @@ class GameOver(SceneSuper):
         screen.fill((255, 255, 255))
         screen.blit(self.get_image(self.path + self.background), (0, 0))
 
-        self.button("Play again?", 650, 250, 100, 50, self.red, self.light_red, screen, self.menuObject)
+        self.button("Play again?", 650, 250, 120, 50, self.white, self.gray, screen, self.menuObject)
+        self.button("Quit", 650, 320, 120, 50, self.white, self.gray, screen, 'abort')
 
         if frame % 10 == 0:
             self.particles.append([random.randrange(0, 800), 610, random.randrange(1, 6)])
