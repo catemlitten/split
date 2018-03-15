@@ -1,5 +1,7 @@
 from super import SceneSuper
 from gameover import GameOver
+from winner import WonLevel
+from victory import Victor
 from player import *
 from animator import *
 from tile import *
@@ -10,9 +12,10 @@ import os
 
 class GameScene(SceneSuper):
 
-    def __init__(self, level, background):
+    def __init__(self, level, background, menuObject):
         SceneSuper.__init__(self)
         self.background = background
+        self.menuObject = menuObject #otherwise circular imports.
         self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
         self.board = Board()
         self.level = level
@@ -22,6 +25,7 @@ class GameScene(SceneSuper):
         self.emptySpots = self.board.emptySpots
         self.animationSpots = []
         self.frame = 0
+        self.victory_count = 0
         for x in range(4):
             rand1 = random.randint(0, len(self.emptySpots) - 1)
             self.animationSpots.append(self.emptySpots[rand1])
@@ -79,7 +83,17 @@ class GameScene(SceneSuper):
         p2_status = self.p2.update(direction, screen, self.board)
 
         if p1_status[0] == "dead" or p2_status[0] == "dead":
-            self.switch_to_scene(GameOver())
+            self.switch_to_scene(GameOver(self.menuObject))
+        if p1_status[0] == "victory":
+            print("Victory player 1")
+            self.victory_count += 1
+            self.p1 = Victor(self.path + '/animation/character3/', p1_status[1], p1_status[2])
+        if p2_status[0] == "victory":
+            print("Victory player 2")
+            self.victory_count += 1
+            self.p2 = Victor(self.path + '/animation/character4/', p2_status[1], p2_status[2])
+        if self.victory_count == 2:
+            self.switch_to_scene(WonLevel())
         if p1_status[0] == "moving":
             fallingCoin = Animator(self.path + '/animation/coin/', p1_status[1], p1_status[2])
             fallingCoin.realX += 12.5

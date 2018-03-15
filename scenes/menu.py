@@ -45,9 +45,9 @@ class MenuScene(SceneSuper):
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
             
-        smallText = pygame.font.Font("freesansbold.ttf", 15)
-        midText = pygame.font.Font("freesansbold.ttf", 70)
-        largeText = pygame.font.Font("freesansbold.ttf", 115)
+        smallText = pygame.font.Font("VT323-Regular.ttf", 20)
+        midText = pygame.font.Font("VT323-Regular.ttf", 70)
+        largeText = pygame.font.Font("VT323-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
@@ -55,8 +55,8 @@ class MenuScene(SceneSuper):
     def on_render(self, screen, clock):
         self.setBackground(0, 0, screen)
 
-        self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen, GameScene(1, '/animation/bg_2.png'))
-        self.button("Level Select", 650, 250, 100, 50, self.red, self.light_red, screen, LevelSelect())
+        self.button("Start Game", 650, 190, 100, 50, self.red, self.light_red, screen, GameScene(1, '/animation/bg_2.png', self))
+        self.button("Level Select", 650, 250, 100, 50, self.red, self.light_red, screen, LevelSelect(self))
         self.button("About", 650, 310, 100, 50, self.red, self.light_red, screen)
         self.button("Quit Game", 650, 370, 100, 50, self.red, self.light_red, screen, 'abort')
         pygame.display.flip()
@@ -64,8 +64,9 @@ class MenuScene(SceneSuper):
 
 class LevelSelect(SceneSuper):
     
-    def __init__(self):
+    def __init__(self, menuObject):
         SceneSuper.__init__(self)
+        self.menuObject = menuObject
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
         self.red = (252, 169, 173)
@@ -104,11 +105,11 @@ class LevelSelect(SceneSuper):
             pygame.draw.rect(screen, inactive, (posX, posY, width, height))
             if click[0] == 1 and action != None:
                 if action == "level2.txt":
-                    self.switch_to_scene(GameScene(2, '/animation/franck-veschi-unsplash.jpg'))
+                    self.switch_to_scene(GameScene(2, '/animation/franck-veschi-unsplash.jpg', self.menuObject))
                 elif action == "level1.txt":
-                    self.switch_to_scene(GameScene(1,'/animation/bg_2.png'))
+                    self.switch_to_scene(GameScene(1,'/animation/bg_2.png', self.menuObject))
                 elif action == "level3.txt":
-                    self.switch_to_scene(GameScene(3,'/animation/pablo-heimplatz-unsplash.jpg'))
+                    self.switch_to_scene(GameScene(3,'/animation/pablo-heimplatz-unsplash.jpg', self.menuObject))
                 elif action != 'abort':
                     self.switch_to_scene(action)
                 else:
@@ -117,9 +118,9 @@ class LevelSelect(SceneSuper):
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
 
-        smallText = pygame.font.Font("freesansbold.ttf", 15)
-        midText = pygame.font.Font("freesansbold.ttf", 70)
-        largeText = pygame.font.Font("freesansbold.ttf", 115)
+        smallText = pygame.font.Font("VT323-Regular.ttf", 20)
+        midText = pygame.font.Font("VT323-Regular.ttf", 70)
+        largeText = pygame.font.Font("VT323-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
@@ -134,7 +135,7 @@ class LevelSelect(SceneSuper):
     def on_render(self, screen, clock):
         self.setBackground(0, 0, screen)
 
-        self.button("Leve One", 230, 250, 100, 50, self.blue, self.light_blue, screen, "level1.txt")
+        self.button("Level One", 230, 250, 100, 50, self.blue, self.light_blue, screen, "level1.txt",)
         self.button("Level Two", 360, 250, 100, 50, self.blue, self.light_blue, screen, "level2.txt")
         self.button("Level Three", 490, 250, 100, 50, self.blue, self.light_blue, screen, "level3.txt")
         self.button("Main Menu", 280, 350, 100, 50, self.red, self.light_red, screen, MenuScene())

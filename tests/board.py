@@ -25,7 +25,6 @@ class Board:
                 if whatGoesThere != '\n':
                     boardLine.append(whatGoesThere)
                 if whatGoesThere == 'e':
-                    # nothing to make, but increment x
                     self.emptySpots.append([x, y])
                     x += 1
                 elif whatGoesThere == 't':
@@ -64,20 +63,3 @@ class Board:
         for tile in self.tiles:
             if tile.x == x and tile.y == y:
                 self.tiles.remove(tile)
-
-
-    def check_jump(self, playerOne, playerTwo):
-        # p1.update(direction, screen)
-        # up, down, left, right
-        # if jump off cliff - die
-        # else if jump onto new coin call update()
-        # else if wall -- bounce? or idle
-        return None
-'''
-When a player jumps need a way to reference their X/Y and the X/Y on board
-Have to update the empty spots
-if player x/y goes onto empty x/y then they fall/die
-if player x/y goes onto coin the coin they were on should disappear
-if player x/y goes onto wall they should bounce/idle
-if player x/y goes onto red or blue coin -- change pic? remove from screen?
-'''
