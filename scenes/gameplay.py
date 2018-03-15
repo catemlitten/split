@@ -36,6 +36,15 @@ class GameScene(SceneSuper):
             self.particles.append([random.randrange(0, 800), random.randrange(0, 600), random.randrange(1, 6)])
         self.fallingCoins = []
 
+    def set_tiles(self, level):
+        self.tiles = self.board.get_tiles(level)
+
+    def get_background(self):
+        return self.background
+
+    def set_background(self, image):
+        self.background = image
+    
     def handle_input(self, events, keys):
         pass
 
