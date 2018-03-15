@@ -59,16 +59,16 @@ class Player:
                     return ["wall", self.x, self.y]
                 elif next_tile == 'e':
                     board.remove_tile(self.x, self.y, screen)
-                    return ["dead", self.x, self.y]
+                    return ["dead", self.x, self.y-1]
                 elif next_tile == 'q' or next_tile == 'p':
                     board.remove_tile(self.x, self.y, screen)
-                    return ["victory", self.x, self.y]
+                    return ["victory", self.x, self.y-1]
                 else:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["moving", self.x, self.y]
+                    return ["moving", self.x, self.y-1]
             except IndexError:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["dead", self.x, self.y]
+                    return ["dead", self.x, self.y-1]
         elif direction == 'down':
             try:                                                                       
                 next_tile = board.board[self.y][self.x - 1]
@@ -77,17 +77,17 @@ class Player:
                     return ["wall", self.x, self.y]
                 elif next_tile == 'e':
                     print("Ded.")
-                    board.remove_tile(self.x, self.y, screen)
+                    board.remove_tile(self.x-1, self.y, screen)
                     return ["dead", self.x, self.y]
                 elif next_tile == 'q' or next_tile == 'p':
-                    board.remove_tile(self.x, self.y, screen)
-                    return ["victory", self.x, self.y]
+                    board.remove_tile(self.x-1, self.y, screen)
+                    return ["victory", self.x-1, self.y]
                 else:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["moving", self.x, self.y]
+                    return ["moving", self.x-1, self.y]
             except IndexError:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["dead", self.x, self.y]
+                    return ["dead", self.x-1, self.y]
         elif direction == 'right':
             try:
                 next_tile = board.board[self.y - 1][self.x]
@@ -96,16 +96,16 @@ class Player:
                     return ["wall", self.x, self.y]
                 elif next_tile == 'e':
                     board.remove_tile(self.x, self.y, screen)
-                    return ["dead", self.x, self.y]
+                    return ["dead", self.x+1, self.y]
                 elif next_tile == 'q' or next_tile == 'p':
                     board.remove_tile(self.x, self.y, screen)
-                    return ["victory", self.x, self.y]
+                    return ["victory", self.x+1, self.y]
                 else:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["moving", self.x, self.y]
+                    return ["moving", self.x+1, self.y]
             except IndexError:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["dead", self.x, self.y]
+                    return ["dead", self.x+1, self.y]
         elif direction == 'left':
             try:
                 next_tile = board.board[self.y - 1][self.x - 2]
@@ -114,16 +114,16 @@ class Player:
                     return ["wall", self.x, self.y]
                 elif next_tile == 'e':
                     board.remove_tile(self.x, self.y, screen)
-                    return ["dead", self.x, self.y]
+                    return ["dead", self.x-1, self.y]
                 elif next_tile == 'q' or next_tile == 'p':
                     board.remove_tile(self.x, self.y, screen)
-                    return ["victory", self.x, self.y]
+                    return ["victory", self.x-1, self.y]
                 else:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["moving", self.x, self.y]
+                    return ["moving", self.x-1, self.y]
             except IndexError:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["dead", self.x, self.y]
+                    return ["dead", self.x-1, self.y]
 
     def update(self, direction, screen, board):  # add board parameter to control jump
         self.frame += 1

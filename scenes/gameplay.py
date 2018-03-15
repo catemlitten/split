@@ -84,11 +84,13 @@ class GameScene(SceneSuper):
         if p1_status[0] == "dead" or p2_status[0] == "dead":
             self.switch_to_scene(GameOver())
         if p1_status[0] == "victory":
+            print("Victory player 1")
             victory_count += 1
-            p1 = Victor(self.path + '/animation/character3/', self.board.player1[0], self.board.player1[1])
+            self.p1 = Victor(self.path + '/animation/character3/', p1_status[1], p1_status[2])
         if p2_status[0] == "victory":
+            print("Victory player 2")
             victory_count += 1
-            p1 = Victor(self.path + '/animation/character4/', self.board.player2[0], self.board.player2[1])
+            self.p2 = Victor(self.path + '/animation/character4/', p2_status[1], p2_status[2])
         if victory_count == 2:
             self.switch_to_scene(WonLevel())
         if p1_status[0] == "moving":

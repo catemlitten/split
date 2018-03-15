@@ -50,6 +50,7 @@ class Victor:
 
     def update(self, direction, screen, board):  # add board parameter to control jump
         self.frame += 1
+        print(self.idleFrames)
         if self.state == "idle" and self.frame > self.idleFrames:
             self.frame = 1
         self.drawFrame(screen)
