@@ -28,26 +28,6 @@ class Victor:
     def drawFrame(self, sc):
         sc.blit(self.get_image(self.path + self.state + "/" + (4-len(str(self.frame)))*'0' + str(self.frame) + '.png'), (self.realX,self.realY))
 
-    # def location(self, isReal):
-    #     if isReal:
-    #         if self.d == 'up':
-    #             self.realY -= 35/self.jumpFrames
-    #         elif self.d == 'down':
-    #             self.realY += 35/self.jumpFrames
-    #         elif self.d == 'left':
-    #             self.realX -= 50/self.jumpFrames
-    #         elif self.d == 'right':
-    #             self.realX += 50/self.jumpFrames
-    #     else:
-    #         if self.d == 'up':
-    #             self.y -= 1
-    #         elif self.d == 'down':
-    #             self.y += 1
-    #         elif self.d == 'left':
-    #             self.x -= 1
-    #         elif self.d == 'right':
-    #             self.x += 1
-
     def update(self, direction, screen, board):  # add board parameter to control jump
         self.frame += 1
         if self.state == "idle" and self.frame > self.idleFrames:

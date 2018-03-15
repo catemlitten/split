@@ -93,7 +93,7 @@ class GameScene(SceneSuper):
             self.victory_count += 1
             self.p2 = Victor(self.path + '/animation/character4/', p2_status[1], p2_status[2])
         if self.victory_count == 2:
-            self.switch_to_scene(WonLevel())
+            self.switch_to_scene(WonLevel(self.menuObject))
         if p1_status[0] == "moving":
             fallingCoin = Animator(self.path + '/animation/coin/', p1_status[1], p1_status[2])
             fallingCoin.realX += 12.5
