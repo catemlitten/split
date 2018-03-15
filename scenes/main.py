@@ -6,6 +6,7 @@ def play_game(width, height, fps, starting_scene):
     pygame.init()
     screen = pygame.display.set_mode((width, height))
     clock = pygame.time.Clock()
+    pygame.display.set_caption("Split")
 
     active_scene = starting_scene
 
