@@ -78,16 +78,16 @@ class Player:
                 elif next_tile == 'e':
                     print("Ded.")
                     board.remove_tile(self.x-1, self.y, screen)
-                    return ["dead", self.x, self.y]
+                    return ["dead", self.x, self.y+1]
                 elif next_tile == 'q' or next_tile == 'p':
                     board.remove_tile(self.x-1, self.y, screen)
-                    return ["victory", self.x-1, self.y]
+                    return ["victory", self.x-1, self.y+1]
                 else:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["moving", self.x-1, self.y]
+                    return ["moving", self.x-1, self.y+1]
             except IndexError:
                     board.remove_tile(self.x, self.y, screen)
-                    return ["dead", self.x-1, self.y]
+                    return ["dead", self.x-1, self.y+1]
         elif direction == 'right':
             try:
                 next_tile = board.board[self.y - 1][self.x]

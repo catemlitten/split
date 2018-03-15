@@ -24,6 +24,7 @@ class GameScene(SceneSuper):
         self.emptySpots = self.board.emptySpots
         self.animationSpots = []
         self.frame = 0
+        self.victory_count = 0
         for x in range(4):
             rand1 = random.randint(0, len(self.emptySpots) - 1)
             self.animationSpots.append(self.emptySpots[rand1])
@@ -58,7 +59,6 @@ class GameScene(SceneSuper):
     def on_render(self, screen, clock):
         done = False
         player_dead = False
-        victory_count = 0
 
         if pygame.key.get_pressed()[pygame.K_w] or pygame.key.get_pressed()[pygame.K_UP]:
             direction = 'up'
@@ -85,13 +85,13 @@ class GameScene(SceneSuper):
             self.switch_to_scene(GameOver())
         if p1_status[0] == "victory":
             print("Victory player 1")
-            victory_count += 1
+            self.victory_count += 1
             self.p1 = Victor(self.path + '/animation/character3/', p1_status[1], p1_status[2])
         if p2_status[0] == "victory":
             print("Victory player 2")
-            victory_count += 1
+            self.victory_count += 1
             self.p2 = Victor(self.path + '/animation/character4/', p2_status[1], p2_status[2])
-        if victory_count == 2:
+        if self.victory_count == 2:
             self.switch_to_scene(WonLevel())
         if p1_status[0] == "moving":
             fallingCoin = Animator(self.path + '/animation/coin/', p1_status[1], p1_status[2])
