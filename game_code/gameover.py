@@ -42,9 +42,9 @@ class GameOver(SceneSuper):
         else:
             pygame.draw.rect(screen, active, (posX, posY, width, height))
             
-        smallText = pygame.font.Font("PressStart2P-Regular.ttf", 10)
-        midText = pygame.font.Font("PressStart2P-Regular.ttf", 70)
-        largeText = pygame.font.Font("PressStart2P-Regular.ttf", 115)
+        smallText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/PressStart2P-Regular.ttf", 10)
+        midText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/PressStart2P-Regular.ttf", 70)
+        largeText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/PressStart2P-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
