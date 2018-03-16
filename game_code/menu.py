@@ -98,11 +98,11 @@ class LevelSelect(SceneSuper):
             pygame.draw.rect(screen, inactive, (posX, posY, width, height))
             if click[0] == 1 and action != None:
                 if action == "level2.txt":
-                    self.switch_to_scene(GameScene(2, '/animation/franck-veschi-unsplash.jpg', self.menuObject))
+                    self.switch_to_scene(GameScene(2, '/animation/bg_3.png', self.menuObject))
                 elif action == "level1.txt":
                     self.switch_to_scene(GameScene(1,'/animation/bg_2.png', self.menuObject))
                 elif action == "level3.txt":
-                    self.switch_to_scene(GameScene(3,'/animation/pablo-heimplatz-unsplash.jpg', self.menuObject))
+                    self.switch_to_scene(GameScene(3,'/animation/bg_4.png', self.menuObject))
                 elif action != 'abort':
                     self.switch_to_scene(action)
                 else:
