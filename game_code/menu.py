@@ -7,11 +7,9 @@ class MenuScene(SceneSuper):
 
     def __init__(self):
         SceneSuper.__init__(self)
-        self.white = (255, 255, 255)
         self.black = (0, 0, 0)
         self.red = (249, 24, 35)
         self.light_red = (168, 13, 21)
-        self.green = (0, 255, 0)
         self.blue = (0, 0, 255)
         self.screenImg = pygame.image.load(os.path.dirname(os.path.realpath(__file__)) + "/SplitMenuScreen.png")
 
@@ -46,8 +44,6 @@ class MenuScene(SceneSuper):
             pygame.draw.rect(screen, active, (posX, posY, width, height))
             
         smallText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 20)
-        midText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 70)
-        largeText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)
@@ -67,12 +63,9 @@ class LevelSelect(SceneSuper):
     def __init__(self, menuObject):
         SceneSuper.__init__(self)
         self.menuObject = menuObject
-        self.white = (255, 255, 255)
         self.black = (0, 0, 0)
         self.red = (252, 169, 173)
         self.light_red = (255, 132, 138)
-        self.green = (0, 255, 0)
-        self.light_green = (0, 100, 0)
         self.blue = (196, 218, 255)
         self.light_blue = (145, 183, 247)
         self.lvlBackground = None #added these variables so that they can be used in GameScene
@@ -119,8 +112,6 @@ class LevelSelect(SceneSuper):
             pygame.draw.rect(screen, active, (posX, posY, width, height))
 
         smallText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 20)
-        midText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 70)
-        largeText = pygame.font.Font(os.path.dirname(os.path.realpath(__file__)) + "/VT323-Regular.ttf", 115)
         textSurf, textRect = self.text_objects(text, smallText)
         textRect.center = ((posX + (width / 2)), (posY + (height / 2)))
         screen.blit(textSurf, textRect)

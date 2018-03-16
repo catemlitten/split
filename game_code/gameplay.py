@@ -42,6 +42,7 @@ class GameScene(SceneSuper):
         for i in range(35):
             self.particles.append([random.randrange(0, 800), random.randrange(0, 600), random.randrange(1, 6)])
         self.fallingCoins = []
+        self.dead = False
 
     def set_tiles(self, level):
         self.tiles = self.board.get_tiles(level)
@@ -59,7 +60,18 @@ class GameScene(SceneSuper):
         pass
 
     def on_render(self, screen, clock):
-
+        if self.dead == True:
+            currFrame = self.frame
+            triggerFrame = currFrame + 100
+            d = "dead"
+            while currFrame != triggerFrame:
+                self.p1.update(d, screen, self.board)
+                self.p2.update(d, screen, self.board)
+                currFrame += 1
+                pygame.display.flip()
+            pygame.time.delay(700)
+            self.switch_to_scene(GameOver(self.menuObject))
+        
         if pygame.key.get_pressed()[pygame.K_w] or pygame.key.get_pressed()[pygame.K_UP]:
             direction = 'up'
         elif pygame.key.get_pressed()[pygame.K_a] or pygame.key.get_pressed()[pygame.K_LEFT]:
@@ -82,10 +94,10 @@ class GameScene(SceneSuper):
         p2_status = self.p2.update(direction, screen, self.board)
 
         if p1_status[0] == "dead" or p2_status[0] == "dead":
-            print(p1_status[1])
             self.p1 = DeadPlayer(self.path + '/animation/character1/', p1_status[1], p1_status[2])
             self.p2 = DeadPlayer(self.path + '/animation/character2/', p2_status[1], p2_status[2])
-            self.switch_to_scene(GameOver(self.menuObject))
+            self.dead = True
+            # self.switch_to_scene(GameOver(self.menuObject))
         if p1_status[0] == "victory":
             print("Victory player 1")
             self.victory_count += 1
