@@ -1,6 +1,7 @@
 import pygame
 import os
 from board import *
+from utils import *
 
 class Victor:
 
@@ -17,20 +18,9 @@ class Victor:
         self.state = "idle"
         self.idleFrames = len(os.listdir(self.path + 'idle/'))
 
-    def get_image(self, path):
-        image = self._image_library.get(path)
-        if image == None:
-            canonicalized_path = path.replace('/', os.sep).replace('/', os.sep)
-            image = pygame.image.load(canonicalized_path)
-            self._image_library[path] = image
-        return image
-
-    def drawFrame(self, sc):
-        sc.blit(self.get_image(self.path + self.state + "/" + (4-len(str(self.frame)))*'0' + str(self.frame) + '.png'), (self.realX,self.realY))
-
     def update(self, direction, screen, board):  # add board parameter to control jump
         self.frame += 1
         if self.state == "idle" and self.frame > self.idleFrames:
             self.frame = 1
-        self.drawFrame(screen)
+        drawFrame(self, screen)
         return "alive"
