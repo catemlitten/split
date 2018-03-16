@@ -12,7 +12,7 @@ class GameOver(SceneSuper):
 
     def __init__(self, menuObject):
         SceneSuper.__init__(self)
-        self.background = '/animation/gameoverwide.jpg'
+        self.background = '/animation/gameover.png'
         self.menuObject = menuObject
         self.path = os.path.dirname(os.path.realpath(__file__)) + '/..'
         self.white = (255, 255, 255)
